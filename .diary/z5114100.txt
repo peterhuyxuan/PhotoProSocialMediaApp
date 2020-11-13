@@ -1,0 +1,22 @@
+Work Diary of Wendy Huynh
+Week 1
+    - first week, formed teams, voted on which project to undertake
+    - decided on PhotoPro as a team
+Week 2
+    - Contributed to finalising User Stories / uploading to Jira
+    - Started on Storyboards for the Project Proposal
+Week 3
+    - Finalised Storyboards
+    - Finalised Sprint Schedule with team
+Week 4
+    - Created login page and register page (Login.js, Register.js)
+Week 5
+    - User story 1.10 - display contributor details
+Week 6
+    - User story 1.17 Purchasing (with help of the team Scrum Master)
+Week 7
+    - Started the Project Report
+Week 8
+    - Project Report: Worked on System Architecture, Functionalities and Implementation, User Manual.
+Week 9
+    - css: Added border to to posts

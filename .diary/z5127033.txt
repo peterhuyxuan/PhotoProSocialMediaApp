@@ -1,0 +1,11 @@
+Week 1
+
+Formed a group, and I joined Jira which was created by Peter, the scrum master. I did my portion of user stories. 
+
+Week 2
+
+Started creating story boards. We compared the user stories, and removed any overlapping ones. As a group we also allocated priorities and Ids to each of the user stories. The refined user stories were then uploaded onto Jira. 
+
+Week 3
+
+We finished the storyboards and had our first scrum meeting. We allocated each member one user story each. The user story I'm doing is 1.8, viewing bookmarked images. I will watch the react videos to get a better understanding of react and begin coding soon. 

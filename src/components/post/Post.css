@@ -1,0 +1,474 @@
+.imageupload {
+    display: flex;
+    padding-bottom: 0;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width:500px;
+}
+
+.imageupload__container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.imageupload__secondSection {
+    display: flex;
+    flex-direction: row;
+}
+
+.imageupload__secondSectionModal {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 50px;
+}
+
+.imageupload__commentAssign > hr {
+    color: gray;
+    height: 1px;
+    opacity: 0.3;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.imageupload__avatar {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.imageupload__secondSection > input {
+    background-color: transparent;
+    border: none;
+    width:100%;
+    outline: none;
+}
+
+.imageupload__secondSectionModal > input {
+    background-color: transparent;
+    border: none;
+    width:100%;
+    outline: none;
+}
+
+.imageupload__secondSectionModal > input::-webkit-input-placeholder {
+    font-weight: 100;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: #c3c3c3;
+}
+
+.imageupload__secondSectionModal > input {
+    font-weight: 100;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color: #000;
+}
+
+.imageupload__firstSection {
+    background-color: #F5F6F7;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.imageupload__firstSectionModal {
+    display: flex;
+    flex-direction: row;
+    background-color: #F5F6F7;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.imageupload__firstSection > h3 {
+    padding: 10px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.imageupload__feedModal {
+    background-color: #F5F6F7;
+    width: 100%;
+    border-top: 1px solid rgba(185, 185, 185, 0.554);
+}
+
+.imageupload__newsFeed {
+    height: 23px;
+    margin-left: 9px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.imageupload__colorwrap1 {
+    background-color: white;
+    width: 40px;
+    margin-left: 43px;
+    margin-top: 5px;
+    height: 40px;
+    margin-bottom: 5px;
+    border-radius: 50px;
+}
+
+.imageupload__firstSectionModal > h3 {
+    padding: 10px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.imageupload .imageupload__container > hr {
+    height: 1px;
+    background-color: #E9EBEE;
+    margin-top: 30px;
+    margin-right: 20px;
+    margin-left: 20px;
+    opacity: 0.3;
+}
+
+.imageupload__imageupload {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: #F5F6F7;
+    border-radius: 20px;
+    width: 100px;
+    margin-right:5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+}
+
+.imageupload__imageuploadModal {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    background-color: #F5F6F7;
+    border-radius: 20px;
+    width: 100px;
+    margin-right:5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 30px;
+}
+
+.imageupload__imageupload > h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left:7px;
+    margin-top: 10px;
+}
+
+.imageupload__imageupload .imageupload__gallery {
+    height: 25px;
+    margin-left: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.imageupload__imageuploadModal > h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left:7px;
+    margin-top: 10px;
+}
+
+.imageupload__imageuploadModal .imageupload__gallery {
+    height: 25px;
+    margin-left: 13px;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+
+.imageupload__checkbox {
+    height: 30px;
+}
+
+.imageupload__more {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    background-color: #F5F6F7;
+    border-radius: 20px;
+    width:50px;
+    height: 35px;
+    margin-right:5px;
+    margin-top: 10px;
+}
+
+.imageupload__more .imageupload__dots {
+    height: 20px;
+    margin-left: 15px;
+    margin-top: 7px;
+    margin-bottom: 5px;
+}
+
+.uploadimage__options {
+    display: flex;
+    flex-direction:row;
+}
+
+
+
+.containerr {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 40px;
+
+  }
+  
+  /* Hide the browser's default checkbox */
+  .containerr > input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    border-radius: 40px;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    margin-top: 20px;
+    margin-left: 10px;
+    background-color: #eee;
+    border: 1px solid gray;
+    border-radius: 20px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .containerr:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .containerr input:checked ~ .checkmark {
+    background-color: #4267B2;
+    border-radius: 20px;
+    border: none;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .containerr input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .containerr .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .imageupload__submitButton {
+      width: 95%;
+      margin-left: 10px !important;
+      margin-right: 10px !important;
+      margin-bottom: 10px !important;
+      background-color: #4267B2 !important;
+      color: #fff !important;
+      border-radius: 0px !important;
+      height: 30px !important;
+  }
+
+  .imageupload__feedModal > h3 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      display: flex;
+      margin-top: -30px;
+      margin-left: 100px;
+  }
+
+  .imageFile {
+      display: none;
+  }
+
+  .imageText {
+      margin-bottom:10px;
+      color: rgba(255, 255, 255, 0);
+      font-size: 10px;
+  }
+
+  .imageText.show {
+    font-size: 15px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    color: rgb(180, 180, 180);
+    display: block;
+  }
+
+  .progress {
+      width: 90%;
+      margin-right: 10px;
+      margin-left: 20px;
+      margin-bottom:10px;
+      display: none;
+  }
+
+  .progress.show {
+    width: 90%;
+    margin-right: 10px;
+    margin-left: 20px;
+    margin-bottom:10px;
+  }
+  
+.bookmarkButton {
+    float: right;
+}
+    
+    
+.deleteButton {
+    float: right;
+    
+
+}
+
+.div1 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.div2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.div3 {
+    width: 100%;
+}
+
+.collectionHeading {
+    text-align: center;
+    margin-top: 40px;
+    margin-left: 40px;
+    font-weight: bold;
+    color: #534e53;
+    font-size: 18pt;
+}
+
+.collectionButtonDivs {
+    margin-left: 30px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.closeButton {
+    float: right;
+    outline: none;
+}
+
+
+.addtoCollectionButton {
+    border: none;
+    background-color: #fafafa;
+    height: 30px;
+    margin: 5px;
+    border-radius: 7px;
+
+}
+
+
+.addtoCollectionButton:hover {
+    background-color: #d7c1d7;
+}
+
+.addtoCollectionInput {
+    width: 200px;
+    border: none;
+    background-color: #fafafa;
+    margin-left: 10px;
+}
+
+.deletecollection {
+    display: flex;
+    flex-direction: column;
+}
+
+.deleteHeading {
+    flex: 1.5;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #534e53;
+    font-size: 10pt;
+}
+
+.deleteYesNo {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.YesNo {
+    flex: 1;
+    text-align: center;
+}
+
+
+.deletebutton {
+    border: none;
+    background-color: #fafafa;
+    font-weight: bold;
+}
+
+.deletebutton:hover {
+    color: #fba8a8;
+   
+}
+
+
+.purchaseHeading {
+
+    text-align: center;
+    margin-top: 40px;
+    margin-left: 32px;
+    font-weight: bold;
+    color: #534e53;
+    font-size: 18pt;
+    flex: 1.5;
+
+}
+
+.purchaseButtons {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+

@@ -1,0 +1,16 @@
+Week 1
+
+Formed our group and broke down the project description into user stories. 
+
+Week 2
+
+Started watching videos on our stack, particularly firebase and react tutorials. Started working on background information for the project proposal.
+
+Week 3
+
+Planned our first user stories, assigned tasks. Watched videos on REACT and firebase. Finished working on oproject proposal
+
+Week 4
+
+Implemented first user story on searching by tag and by user. Begin working on CSS for the automatic tag dropdown menu
+in the search. Waiting for user functinoality to come in, then cleaning up saerch functions before starting new user story.

@@ -1,0 +1,24 @@
+Week 1:
+Created the JIRA account for the team ready to officially start the SCRUM Proccess. Was appointed SCRUM Master. Allocated tasks for the proposal. Decided on using the React/Firebase Stack and did a tutorial project using this stack. Decided on a meeting time.
+
+Week 2:
+Joined this GitHub repository. Explored the Firebase/React playing around with other examples. Did the majority of background, system architecture and a portion of the User Stories and formatting for the proposal. Gave my team members resources that might be useful for this project.
+
+Week 3:
+Led the first Sprint meeting as the Scrum master and delagated 5 user stories to achieve per Sprint. Created the foundations of the PhotoPro website, giving a rundown of the website codebase and demonstrated to the team how React and Firebase works and operates within the framework of the website. Addressed user story: 1.2, 1.3, 1.4, 1.5, 1.7, 1.14, 2.1, 2.2, 2.4 but needs to be cleaned up. Finished the System Architecture Diagram in the Proposal.
+
+Week 4:
+Refactored the code significantly to allow the codebase to maintain consistency with whichever user account is used in the web application. Also refactored the Firebase database structure to improve the structure the backend interaction with frontend in terms of seperating the users and the posts. Finished my user story (1.6) and significantly helped my group members work on their user stories (1.1, 1.9 and 3.1). Decided to lower the pace of each Scrum from 5 new user stories a week to 2-3 per scrum to allow time to fix up the code of the user stories and merging and integrating with master.
+
+Week 5:
+Had our sprint where we have finished the functionality for our remaining user stories and started the final sprint to complete the final user stories within our backlog. Helped my group members completed the following User Stories (1.8, 1.9, 1.10, 1.16) and fixed some styling for the Presentation. Did the first Retrospective A with my team and submitted the report.
+
+Week 6:
+Helped my team members and I complete all of the remaining user stories except for User Story 1.11. Worked on another User Story 3.3 to add a spinner whilst uploading images. Displayed the file name which was chosen to be uploaded and have the Nav Bar fixed at the top whilst scrolling. Integrated pretty much all of the core functionality with master. Metup with my team on Thursday 22/10/2020 at the library to integrate all of my team member's branches together and helped fixed the watermark text ratio on the image as well as further styling. Contributed to the start of the final project report.
+
+Week 7:
+Rectored a large majority of the code to reduce the size of Post.js by taking out the comments, bookmark. tags, likes, purchase and download features to their own components file. I also removed all of the warnings when compiling the codebase and also fixed the issue of when a user uploads a photo they still need to buy their own photo so it's now sorted now. Need to work on major styling now.
+Refactored the code significantly reducing the size of our main file Post.js into many of the sub components files outside Post.js to improve the readibility of our code and also removed off the warnings that popped up when compiling the machine. Also fixed the issues of images being filtered out when adding a tags to the tags followed section and only limited it to showing the top 10 most recent followed tags at a time to satisfy Firebase querying of 10 arrays at a time. Metup with the team and started to identify styling issues to fix.
+
+Week 8:
+Started working on a handful of styling issues and managed to get the majority of them done. Started to identify the next lot of styling issues. Did our Demo B of our completed product showing the remaining user stories that wasn't covered in Demo A going through our final Sprint, Sprint 3. Did our Retrospective B with our team and continued looking at the final report.

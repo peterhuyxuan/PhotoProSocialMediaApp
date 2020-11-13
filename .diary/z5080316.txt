@@ -1,0 +1,15 @@
+Week 1:
+Created a set of user stories based on my section taken from the project objectives/overview document. Had a look at the CSESoc frontend and backend personal projects to get an idea of how to use Firebase and React.
+
+Week 2:
+Reviewed the user stories made by everyone and compared them to choose which ones to keep and modify. I also assigned priorities and numbers to each user story before they were placed into the team Jira.
+
+Week 3:
+I took on US 1.9 Viewing watermarked version, after we did a scrum meeting to choose the difficulty of User stories and choose which ones to include in the current sprint. I also edited the proposal report and completed the sections on the business layer, the project objectives mapping to user stories, as well as references and general document formatting.
+
+Week 4:
+After some help from Peter, I was able to get a basic watermarked version to appear in the user's feed based on whether they had purchased it or not
+
+Week 5:
+I was able to fully generate and store the watermarked versions of images, whenever a user uploads a new image. The watermarked version is downloaded from the api site and is then uploaded to firebase, and its URL stored in the post's imageURLWatermarked attribute.
+

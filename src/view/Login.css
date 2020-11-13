@@ -1,0 +1,73 @@
+.login {
+    background-color: #fafafa;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+}
+
+.login_container {
+    width: 350px;
+    height: 372px;
+    margin-top: -100px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #bcbcbc;
+    border-radius: 3px;
+}
+
+.login_container > h3 {
+    margin-top: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login_container > form > center > input {
+    height: 33px;
+    margin-bottom: 10px;
+    background-color: white;
+    width: 250px;
+    border:0.5px solid gray;
+}
+
+.login_login {
+   
+    background-color: #0195f7;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+    color: white;
+    font-size: 11pt;
+    font-weight: bold;
+    padding: 5px;
+
+}
+
+.login_container > form > center > hr {
+    margin: 25px;
+    color: rgb(221,221,221);
+    border: 0.001em solid;
+    width: 250px;
+}
+
+
+input::placeholder {
+    font-size: 9pt;
+}
+
+.orHeading {
+    font-size: 13pt;
+    margin-top: 10px;
+}
+
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 275px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+
+/*
+///////////// REFERENCE ////////////////
+// https://www.youtube.com/watch?v=nJH0wUUg6EU&fbclid=IwAR2EjZNXUI4MI1Cd_y71x47rRrlnUmL01cPHj3mftPZ-fPfEr35RVWe1nQs&app=desktop&ab_channel=Decacode73
+*/
