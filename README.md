@@ -1,7 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Extensive details of running this Capstone Project Application can be found in 
-## report.pdf
+Extensive details of running this Capstone Project Application can be found in report.pdf
 
 ## Available Scripts
 
