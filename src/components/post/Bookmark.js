@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import clsx from "clsx";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,6 +11,7 @@ import useAppUser from "../../hooks/useAppUser";
 import CloseIcon from "@material-ui/icons/Close";
 import "./Post.css";
 
+// Position of Modal 
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -23,30 +23,31 @@ function getModalStyle() {
   };
 }
 
+// Style of Modal and bookmark 
 const useStyles = makeStyles((theme) => ({
-  // got from PhotoUpload (paper)
   paper: {
     position: "absolute",
     width: "400px",
     height: 343,
     backgroundColor: "#fafafa",
     border: "2px solid #DDDFE2",
-    outline: "none",
+    outline: "none !important",
     boxShadow: theme.shadows[5],
     borderRadius: "20px",
   },
   bookmarked: {
-    outline: "none",
+    outline: "none !important",
     float: "right",
     color: red[500],
   },
   unbookmarked: {
-    outline: "none",
+    outline: "none !important",
     float: "right",
     color: theme.palette.action.active,
   },
 }));
 
+// return id of the collection
 const dbRefCollection = (userId, collectionId) => {
   return db
     .collection("users")
@@ -66,18 +67,23 @@ export default function Bookmark(props) {
   const [progress] = React.useState(0);
   const [newCollection, setNewCollection] = React.useState("");
 
+  // close Modal 
   const handleClose = () => {
     setOpen(false);
   };
 
+  // when bookmark is clicked 
   const handleClick = () => {
+
+    // get value of bookmarked as boolean and postid passed in from post/searchfeedpost
     const { bookmarked, id: postId } = props;
 
+    // if it is not bookmarked open the modal
     if (!bookmarked) {
       return setOpen(true);
     }
 
-    // if bookmarked, remove possible postId from all user collections
+    // if bookmarked, remove postId from all user collections
     const collectionIds = collections.map(({ id }) => id);
     collectionIds.forEach((collectionId) => {
       dbRefCollection(userId, collectionId).update({
@@ -86,10 +92,10 @@ export default function Bookmark(props) {
     });
   };
 
+  // add the post to the collection
   const handleAddToCollection = (collectionId) => {
     const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
     const { id } = props;
-    // console.log(collectionId);
     db.collection("users")
       .doc(userId)
       .collection("photoCollections")
@@ -101,18 +107,21 @@ export default function Bookmark(props) {
     setOpen(false);
   };
 
+  // creating a new collection
   const addCollection = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && newCollection.trim().length > 0) {
       db.collection("users")
         .doc(userId)
         .collection("photoCollections")
-        .doc(newCollection)
+        .doc(newCollection.trim())
         .set({
           posts: [],
         });
+      setNewCollection("");
     }
   };
 
+  // set the tags of the bookmarked post to tagsfollowed collection within database
   function addTag() {
     tags.forEach((tag, index) => {
       db.collection("users")
@@ -124,7 +133,6 @@ export default function Bookmark(props) {
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
-          // console.log(`Added tag: ${tag}`);
         })
         .catch(() => {
           console.error(`Error writing tag: ${tag}`);
@@ -134,6 +142,8 @@ export default function Bookmark(props) {
 
   return (
     <>
+
+      {/*Modal for adding to/creating collection*/}
       <Modal open={open} onClose={handleClose}>
         <div className="imageupload">
           <div style={modalStyle} className={classes.paper}>
@@ -152,12 +162,16 @@ export default function Bookmark(props) {
               ))}
 
               <br />
+
+              {/*Input for creating a new collection*/}
               <input
                 type="text"
+                style={{ outline: "none" }}
                 onChange={(e) => setNewCollection(e.target.value)}
                 placeholder={"Add a new Collection!"}
                 onKeyDown={addCollection}
                 className="addtoCollectionInput"
+                value={newCollection}
               />
             </div>
           </div>
@@ -168,6 +182,8 @@ export default function Bookmark(props) {
           />
         </div>
       </Modal>
+
+      {/*Bookmark Icon*/}
       <IconButton
         className={clsx(classes.bookmarked, {
           [classes.unbookmarked]: !bookmarked,

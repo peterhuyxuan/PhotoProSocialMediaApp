@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     "display": "flex", 
     "justify-content": "center",
     "flex-direction:": "row",
+    "backgroundColor:": "pink"
   },
   title: {
     "padding-top": "20px",
@@ -93,10 +94,12 @@ export function SearchFeed(props) {
         .where("keywords", "array-contains-any", keywords.slice(0, 10))
         .orderBy("timeStamp", "desc");
     }
+    // Query for the tags
     query.onSnapshot((snapshot) => {
       setPosts(
         snapshot.docs.map((doc) => Object.assign({ id: doc.id }, doc.data()))
       );
+    // Display feed posts from followed tags
       if (posts.length > 0 && searchType === "tag") {
         db.collection("users")
           .doc(user)
@@ -142,9 +145,9 @@ export function SearchFeed(props) {
           Description
         </ToggleButton>
       </ToggleButtonGroup>
-      <GridList cellHeight={1000} cols={3} className={classes.gridList}>
+      <GridList cellHeight={800} cols={3} className={classes.gridList} >
       {_posts.map((post) => (
-        <GridListTile key={post.id} cols={1} >
+        <GridListTile key={post.id} cols={1}  >
            <Post key={post.id} {...post} />
         </GridListTile>
       ))}

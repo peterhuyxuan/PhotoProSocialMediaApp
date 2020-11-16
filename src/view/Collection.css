@@ -37,7 +37,7 @@
     background-color: #fafafa;
     border-radius: 10px;
     height: 120px;
-}
+} 
 
 .collectionButton:hover {
     background-color: #d7c1d7;
@@ -49,7 +49,14 @@
     background-color: #fafafa;
     border: none;
     text-align: center;
+    outline: none;
+    margin-bottom: 25px;
     
+}
+
+.collectionInput::placeholder {
+    font-size: 18pt;
+    font-weight: bold;
 }
 
 .headingContainer {

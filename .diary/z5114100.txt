@@ -19,4 +19,6 @@ Week 7
 Week 8
     - Project Report: Worked on System Architecture, Functionalities and Implementation, User Manual.
 Week 9
-    - css: Added border to to posts
+    - css: Added border to to posts, delete collections
+    - Project Report
+    - Added delete collections function

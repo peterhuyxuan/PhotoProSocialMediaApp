@@ -22,3 +22,6 @@ Refactored the code significantly reducing the size of our main file Post.js int
 
 Week 8:
 Started working on a handful of styling issues and managed to get the majority of them done. Started to identify the next lot of styling issues. Did our Demo B of our completed product showing the remaining user stories that wasn't covered in Demo A going through our final Sprint, Sprint 3. Did our Retrospective B with our team and continued looking at the final report.
+
+Week 9:
+Finalised the styling issues. Trimmed string of tags to remove duplicates in search. Helped fixed styling for search and comments. Updated the display of timestamps. Added spinner for comments when posting. Added a new feature to view individual post. Removed all warnings. Helped finished the final report. Wrote challenges about the tags followed system. Utilised more async functions in the code to ensure all informations are processed before displaying correctly. Adding comments and cleaning up code for final submission.

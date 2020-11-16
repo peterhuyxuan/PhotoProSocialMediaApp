@@ -9,3 +9,29 @@ Started creating story boards. We compared the user stories, and removed any ove
 Week 3
 
 We finished the storyboards and had our first scrum meeting. We allocated each member one user story each. The user story I'm doing is 1.8, viewing bookmarked images. I will watch the react videos to get a better understanding of react and begin coding soon. 
+
+Week 4
+
+I realised it would not be feasible to do this user story as it is more logical to first do user story 1.1, which is creating the collection itself, which then the user can add a post to. After doing this, I will continue on 1.8 again. 
+
+Week 5
+
+With Peter's help got the bookmark functionality working. Currently working on the collections page. 
+
+Week 6 (quiet week)
+
+Finished with the functionality of collections page, and am starting coding up the collection post page. Worked on the delete functionality, for deleting a post.
+
+Week 7
+
+During our lab meeting, we went through all the issues of our application. This week I worked mostly on improving the CSS across the entire platform. Particularly focused on collection page, and creating better modals. Will continue to work on the CSS. 
+Also helped out with the project report. 
+
+Week 8
+
+Based on the issues collected in the week 7 lab meeting, I continued to work on the CSS. I worked on the bookmarks button, delete button, amongst other issues we had. Similarly to last week, will continue to focus on CSS. We had another discussion on the issues we still have, and colated them into a document.
+
+Week 9 
+
+Continued to fix up styling issues based on week 7 and week 8 documents. Fixed up issues with searchFeedPost. Continued editing project report a little more. 
+

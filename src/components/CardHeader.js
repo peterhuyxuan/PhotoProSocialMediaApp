@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import withStyles from "@material-ui/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 
 export const styles = {
   /* Styles applied to the root element. */
@@ -33,7 +34,8 @@ export const styles = {
     fontWeight: "bold",
   },
   /* Styles applied to the subheader Typography element. */
-  subheader: {},
+  subheader: { fontWeight: "bold" },
+  timeStampHeader: {},
 };
 
 const CardHeader = React.forwardRef(function CardHeader(props, ref) {
@@ -48,21 +50,25 @@ const CardHeader = React.forwardRef(function CardHeader(props, ref) {
     subheaderTypographyProps,
     title: titleProp,
     titleTypographyProps,
+    postId,
+    timeStamp,
     ...other
   } = props;
 
   let title = titleProp;
   if (title != null && title.type !== Typography && !disableTypography) {
     title = (
-      <Typography
-        variant={avatar ? "body2" : "h5"}
-        className={classes.title}
-        component="span"
-        display="block"
-        {...titleTypographyProps}
-      >
-        {title}
-      </Typography>
+      <Link to={`/profile/${title}`}>
+        <Typography
+          variant={avatar ? "body2" : "h5"}
+          className={classes.title}
+          component="span"
+          display="block"
+          {...titleTypographyProps}
+        >
+          {title}
+        </Typography>
+      </Link>
     );
   }
 
@@ -73,26 +79,48 @@ const CardHeader = React.forwardRef(function CardHeader(props, ref) {
     !disableTypography
   ) {
     subheader = (
+      <Link to={`/post/${postId}`}>
+        <Typography
+          variant={avatar ? "body2" : "body1"}
+          className={classes.subheader}
+          color="textSecondary"
+          component="span"
+          display="block"
+          {...subheaderTypographyProps}
+        >
+          {subheader}
+        </Typography>
+      </Link>
+    );
+  }
+
+  let timeStampHeader = subheaderProp;
+  if (
+    timeStampHeader != null &&
+    timeStampHeader.type !== Typography &&
+    !disableTypography
+  ) {
+    timeStampHeader = (
       <Typography
         variant={avatar ? "body2" : "body1"}
-        className={classes.subheader}
+        className={classes.timeStampHeader}
         color="textSecondary"
         component="span"
         display="block"
         {...subheaderTypographyProps}
       >
-        {subheader}
+        {timeStamp}
       </Typography>
     );
   }
 
   return (
-
     <Component className={clsx(classes.root, className)} ref={ref} {...other}>
       {avatar && <div className={classes.avatar}>{avatar}</div>}
       <div className={classes.content}>
         {title}
         {subheader}
+        {timeStampHeader}
       </div>
       {action && <div className={classes.action}>{action}</div>}
     </Component>

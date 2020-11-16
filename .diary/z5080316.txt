@@ -8,8 +8,17 @@ Week 3:
 I took on US 1.9 Viewing watermarked version, after we did a scrum meeting to choose the difficulty of User stories and choose which ones to include in the current sprint. I also edited the proposal report and completed the sections on the business layer, the project objectives mapping to user stories, as well as references and general document formatting.
 
 Week 4:
-After some help from Peter, I was able to get a basic watermarked version to appear in the user's feed based on whether they had purchased it or not
+After some help from Peter, I was able to get a basic watermarked version to appear in the user's feed based on whether they had purchased it or not - US1.9, US2.3.
 
 Week 5:
-I was able to fully generate and store the watermarked versions of images, whenever a user uploads a new image. The watermarked version is downloaded from the api site and is then uploaded to firebase, and its URL stored in the post's imageURLWatermarked attribute.
+I was able to fully generate and store the watermarked versions of images, whenever a user uploads a new image, as per US1.19 and US1.16. The watermarked version is downloaded from the api site and is then uploaded to firebase, and its URL stored in the post's imageURLWatermarked attribute.
 
+Week 6 (Flexi Week) and 7:
+Added in the extra feature to dynamically set the watermark text size based on the size of the image to prevent the watermark being too small or too large for the original image - US1.9.
+Tweaked the spacing between the upload photo modal file name text and the upload button below.  
+
+Week 8:
+Adjusted the spacing of the Buy/Download button in line with the price. Changed the text overflow behaviour of upload file name in upload photo modal. Manually regenerated some of the watermarked images that were created with an older watermark algorithm to make them more consistent with the others.
+
+Week 9:
+Adjusted popular users carousel to have a max size for images so they dont make the page contents below move up and down. Attempted to implement modal that appears after successful purchase of image but had issues as it is inside a promise.

@@ -7,12 +7,16 @@ import Collapse from "@material-ui/core/Collapse";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { db } from "../../backend/Firebase";
 import firebase from "firebase";
 import useAppUser from "../../hooks/useAppUser";
+import "./Post.css";
+import { calculateDate } from "./Post";
+import DeleteComment from "./DeleteComment";
 
 const useStyles = makeStyles((theme) => ({
   expand: {
@@ -31,11 +35,15 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
   },
+  commentScroll: {
+    overflow: "scroll",
+    height: "200px",
+  },
 }));
 
 export default function Comments(props) {
   const { id: userId } = useAppUser() || {};
-  const { id: postId } = props;
+  const { id: postId, profile, data } = props;
   const classes = useStyles();
   const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState([]);
@@ -43,7 +51,6 @@ export default function Comments(props) {
   const [viewCommentText, setViewCommentText] = React.useState(
     "View all comments..."
   );
-
   React.useEffect(() => {
     let unsubscribeComment;
     if (postId) {
@@ -53,7 +60,11 @@ export default function Comments(props) {
         .collection("comments")
         .orderBy("timeStamp", "desc")
         .onSnapshot((snapshot) => {
-          setComments(snapshot.docs.map((doc) => doc.data()));
+          setComments(
+            snapshot.docs.map((doc) =>
+              Object.assign({ id: doc.id }, doc.data())
+            )
+          );
         });
     }
     return () => {
@@ -74,84 +85,76 @@ export default function Comments(props) {
 
   const handlePostComment = (event) => {
     event.preventDefault();
-    db.collection("posts").doc(postId).collection("comments").add({
-      comment: comment,
-      user: userId,
-      timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    // TODO: Figure out to clear comment after posting as the code below doesn't work
-    setComment("");
-  };
-
-  const calculateDate = (date) => {
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let amOrPM = (hour) => {
-      if (hour > 12) {
-        return "pm";
-      } else {
-        return "am";
-      }
-    };
-    let dateObj = {
-      hour: (hour < 10 ? "0" : "") + hour,
-      minute: (minute < 10 ? "0" : "") + minute,
-      amOrPM: amOrPM(hour),
-    };
-    return `${dateObj.hour}:${dateObj.minute}${dateObj.amOrPM}`;
+    (async () => {
+      await db.collection("posts").doc(postId).collection("comments").add({
+        comment: comment,
+        user: userId,
+        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      setComment("");
+    })();
   };
 
   return (
     <>
       {" "}
-      <CardContent>
-        {comments.slice(0, 1).map((comment) => (
-          <div
-            key={comment.id}
-            style={{
-              display: "flex",
-              border: "1px solid black",
-              paddingTop: 15,
-              paddingLeft: 15,
-              marginTop: 10,
-              borderRadius: "7.5px",
-            }}
-          >
-            <Link to={`/profile/${comment.user}`}>
-              <Typography paragraph style={{ fontWeight: "bold" }}>
-                {comment.user}
-              </Typography>
-            </Link>
-            <Typography paragraph style={{ marginLeft: 50, textAlign: "left" }}>
-              {comment.comment}
-            </Typography>
-            <Typography
-              paragraph
-              style={{ marginLeft: "auto", paddingRight: 15 }}
-            >
-              {typeof comment.timeStamp == "string"
-                ? comment.timeStamp
-                : comment.timeStamp !== null
-                ? calculateDate(comment.timeStamp.toDate())
-                : ""}
-            </Typography>
-          </div>
-        ))}
-      </CardContent>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent style={{ marginTop: -20 }}>
-          {comments.slice(1).map((comment) => (
-            <div
-              style={{
-                display: "flex",
-                border: "1px solid black",
-                paddingTop: 15,
-                paddingLeft: 15,
-                marginBottom: 10,
-                borderRadius: "7.5px",
-              }}
-              key={comment.id}
-            >
+      {data === "searchFeedPost" ? (
+        <CardContent
+          className={clsx({ [classes.commentScroll]: comments.length > 1 })}
+          style={{
+            paddingTop: "0px",
+            paddingBottom: "0px",
+          }}
+        >
+          {comments.map((comment) => (
+            <div className="mainCommentDiv" key={comment.id}>
+              <div className="commentDiv1">
+                <div className="commentuserDiv">
+                  <Link to={`/profile/${comment.user}`}>
+                    <Typography paragraph style={{ fontWeight: "bold" }}>
+                      {comment.user}
+                    </Typography>
+                  </Link>
+                </div>
+                <div className="commentdateDiv">
+                  <Typography
+                    paragraph
+                    style={{ marginLeft: "auto", paddingRight: 15 }}
+                  >
+                    {comment.timeStamp !== null ? (
+                      calculateDate(comment.timeStamp.toDate())
+                    ) : (
+                      <CircularProgress color="inherit" size={20} />
+                    )}
+                  </Typography>
+                </div>
+              </div>
+              <div className="commentDiv2">
+                <div className="commentDivText">
+                  <Typography paragraph>{comment.comment}</Typography>
+                </div>
+                <div className="commentDivDelete">
+                  <DeleteComment
+                    commentId={comment.id}
+                    profile={profile}
+                    commentUser={comment.user}
+                    postId={postId}
+                    currentUser={userId}
+                  ></DeleteComment>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      ) : (
+        <CardContent
+          style={{
+            paddingTop: "0px",
+            paddingBottom: "0px",
+          }}
+        >
+          {comments.slice(0, 1).map((comment) => (
+            <div key={comment.id} className="mainPostCommentDiv">
               <Link to={`/profile/${comment.user}`}>
                 <Typography paragraph style={{ fontWeight: "bold" }}>
                   {comment.user}
@@ -167,32 +170,102 @@ export default function Comments(props) {
                 paragraph
                 style={{ marginLeft: "auto", paddingRight: 15 }}
               >
-                {typeof comment.timeStamp == "string"
-                  ? comment.timeStamp
-                  : comment.timeStamp !== null
-                  ? calculateDate(comment.timeStamp.toDate())
-                  : ""}
+                {comment.timeStamp !== null ? (
+                  calculateDate(comment.timeStamp.toDate())
+                ) : (
+                  <CircularProgress color="inherit" size={20} />
+                )}
               </Typography>
+              <DeleteComment
+                commentId={comment.id}
+                profile={profile}
+                commentUser={comment.user}
+                postId={postId}
+                currentUser={userId}
+              >
+                style=
+                {{
+                  flex: 1,
+                }}
+              </DeleteComment>
             </div>
           ))}
         </CardContent>
-      </Collapse>
+      )}
+      {data === "fromPost" ? (
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+            }}
+          >
+            {comments.slice(1).map((comment) => (
+              <div
+                style={{
+                  display: "flex",
+                  border: "1px solid black",
+                  paddingTop: 15,
+                  paddingLeft: 15,
+                  marginTop: 8,
+                  borderRadius: "7.5px",
+                }}
+                key={comment.id}
+              >
+                <Link to={`/profile/${comment.user}`}>
+                  <Typography paragraph style={{ fontWeight: "bold" }}>
+                    {comment.user}
+                  </Typography>
+                </Link>
+                <Typography
+                  paragraph
+                  style={{ marginLeft: 50, textAlign: "left" }}
+                >
+                  {comment.comment}
+                </Typography>
+                <Typography
+                  paragraph
+                  style={{ marginLeft: "auto", paddingRight: 15 }}
+                >
+                  {comment.timeStamp !== null ? (
+                    calculateDate(comment.timeStamp.toDate())
+                  ) : (
+                    <CircularProgress color="inherit" size={20} />
+                  )}
+                </Typography>
+                <DeleteComment
+                  commentId={comment.id}
+                  profile={profile}
+                  commentUser={comment.user}
+                  postId={postId}
+                  currentUser={userId}
+                >
+                  style=
+                  {{
+                    flex: 1,
+                  }}
+                </DeleteComment>
+              </div>
+            ))}
+          </CardContent>
+        </Collapse>
+      ) : undefined}
       <form onSubmit={handlePostComment}>
         <FormControl
           fullWidth
           className={classes.margin}
           variant="outlined"
-          style={{ paddingLeft: 15 }}
+          style={{ paddingLeft: 15, paddingTop: 10, paddingBottom: 10 }}
         >
           <InputLabel
             htmlFor="outlined-adornment-amount"
-            style={{ paddingLeft: 15 }}
+            style={{ paddingTop: 10, paddingLeft: 15 }}
           >
             Add a comment...
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-amount"
-            labelWidth={60}
+            labelWidth={120}
             style={{
               borderRadius: "7.5px",
               backgroundColor: "#e0e0e0",
@@ -222,7 +295,7 @@ export default function Comments(props) {
               aria-label="show more"
             >
               {/* <ExpandMoreIcon /> */}
-              {comments.length > 1 ? (
+              {comments.length > 1 && data !== "searchFeedPost" ? (
                 <Typography paragraph>{viewCommentText}</Typography>
               ) : undefined}
             </Button>

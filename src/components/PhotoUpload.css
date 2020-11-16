@@ -93,7 +93,9 @@
 
 .imageupload__feedModal {
     background-color: #F5F6F7;
-    width: 100%;
+    position: absolute;
+    margin-left: -2px;
+    border-radius: 5px;
     border-top: 1px solid rgba(185, 185, 185, 0.554);
 }
 

@@ -12,8 +12,6 @@ export function Profile(props) {
   const [posts, setPosts] = React.useState(new Map());
   const { id: userId, bookmarks } = useAppUser();
 
-  // const [tagsFollowed] = React.useState([]);
-
   db.collection("users")
     .doc(props.match.params.userId)
     .get()
@@ -41,7 +39,6 @@ export function Profile(props) {
       unsubscribe();
     };
   }, [props.match.params.userId]);
-  // }, [tagsFollowed]);
 
   const allPosts = posts.get("all") || [];
 
@@ -76,8 +73,8 @@ export function Profile(props) {
       <NavigationBar user={user} />
       <div className="Container">
         <div className="header">
-        <h1>{props.match.params.userId}</h1>
-        <h3>{email}</h3>
+          <h1>{props.match.params.userId}</h1>
+          <h3>{email}</h3>
         </div>
         {
           // if the profile being viewed is the current user,

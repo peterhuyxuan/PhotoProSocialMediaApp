@@ -18,7 +18,7 @@ export function Register(props) {
   const [country, setCountry] = useState("");
 
   const register = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // prevents website from reloading everything once you submit
 
     if (phone.toString().length !== 10) {
       alert("Your phone number starting with '04' must be 10 digits!");
@@ -53,19 +53,19 @@ export function Register(props) {
           auth
             .createUserWithEmailAndPassword(email, password)
             .then((auth) => {
-              if (auth.user) {
+              if (auth.user) { //auth.user refers to all the user info, e.g. email, name
                 auth.user
                   .updateProfile({
-                    username: username,
+                    username: username, // update the username to match the one in auth.user
                   })
                   .then((s) => {
-                    history.push("/");
+                    history.push("/"); // return to homepage after registration
                   });
-                props.onChange(username);
+                props.onChange(username); // change props data to data related to the matching username
               }
             })
             .catch((e) => {
-              alert(e.message);
+              alert(e.message); // if creating a user is unsuccessful
             });
 
           db.collection("users").doc(username).set({
@@ -83,8 +83,6 @@ export function Register(props) {
           });
         }
       });
-
-    // TODO add current user to Firebase or call a function to change variables?
   };
 
   return (

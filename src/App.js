@@ -9,8 +9,8 @@ import { Account } from "./view/Account";
 import { Collection } from "./view/Collection";
 import { Profile } from "./view/Profile";
 import { CollectionPosts } from "./view/CollectionPosts";
+import { IndividualPost } from "./view/IndividualPost";
 
-// TODO replace with authentication
 import useAppUser, { AppUserProvider } from "./hooks/useAppUser";
 
 var user = "longLiveTheCompClubArmy671";
@@ -51,7 +51,6 @@ function App(props) {
     user = username;
   }
 
-  // TODO add position fixed in Navbar and fix rendering issues
   return (
     <div className="App">
       <header className="App-header">
@@ -97,6 +96,15 @@ function App(props) {
               render={(props) => (
                 <div style={{ width: "100%" }}>
                   <CollectionPosts user={user} {...props} />
+                </div>
+              )}
+            ></Route>
+
+            <Route
+              path="/post/:postId"
+              render={(props) => (
+                <div style={{ width: "100%" }}>
+                  <IndividualPost user={user} {...props} />
                 </div>
               )}
             ></Route>

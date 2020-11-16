@@ -1,55 +1,54 @@
 .account {
-    background-color:  #fafafa;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    position: absolute;
-
-
-
+  background-color: #fafafa;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
 }
 
 .titleContainer {
-    margin-top: 80px;
-    font-weight: 400;
-    margin-bottom: 20px;
+  margin-top: 140px;
+  font-weight: 400;
+  margin-bottom: 20px;
 
-    color: #534e53;
-    font-weight: bold;
+  color: #534e53;
+  font-weight: bold;
 }
 
 .updateHeading {
-    font-size: 12pt;
-    margin-top: 20px;
-    color:  #209a9a;
+  font-size: 12pt;
+  margin-top: 20px;
+  color: #209a9a;
 }
 .submitButton {
-    border-radius: 5px;
-    margin-top: 20px;
-    border: none;
-    font-size: 15pt;
-    font-weight: bold;
-    background-color: #209a9a;
-    color: white;
-    padding: 7pt;
+  border-radius: 5px;
+  margin-top: 20px;
+  border: none;
+  font-size: 15pt;
+  font-weight: bold;
+  background-color: #209a9a;
+  color: white;
+  padding: 7pt;
+  outline: none !important;
 }
 
 input {
-    border-radius: 5px;
-    margin-top: 15px;
-    font-size: 15pt;
-
+  border-radius: 5px;
+  margin-top: 15px;
+  font-size: 15pt;
 }
 
-input[type=name], input[type=address], input[type=tel], input[type=country] {
-    background-color: #fafafa;
-    border: 1px solid #bcbcbc;
+input[type="name"],
+input[type="address"],
+input[type="tel"],
+input[type="country"] {
+  background-color: #fafafa;
+  border: 1px solid #bcbcbc;
 }
-
 
 p {
-    font-size: 18pt;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 18pt;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }

@@ -14,3 +14,30 @@ Week 4
 
 Implemented first user story on searching by tag and by user. Begin working on CSS for the automatic tag dropdown menu
 in the search. Waiting for user functinoality to come in, then cleaning up saerch functions before starting new user story.
+
+Week 5
+
+Implemented user search functionality with prefixes and added a menu popover that loads with prefilled results 
+that the user can select. Also implemented dual tag and search functionality in the one search box for demo A.
+
+Week 6 (Quiet week)
+
+Merged current changes into master after feedback from demo A. Worked on retrospective.
+
+Week 7
+
+Added description searching and made tag chips clickable and routes to the search feed.
+
+Week 8
+
+Implemented better autocomplete functionality for the searching and optimised serach results by reducing memory leaks.
+
+Week 9
+
+Worked on styling issues and redesigned the search feed to display posts in a tile format to see more on each page.
+Refactored the code to reduce duplication and prepared for demo B.
+
+Week 10
+
+Prepared for final project source code and worked on the final project report. Fixed styling for various features and
+implemented a delete button for comments.

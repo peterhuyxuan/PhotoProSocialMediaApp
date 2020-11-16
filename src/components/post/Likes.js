@@ -11,11 +11,11 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   liked: {
-    outline: "none",
+    outline: "none !important",
     color: red[500],
   },
   unliked: {
-    outline: "none",
+    outline: "none !important",
     color: theme.palette.action.active,
   },
 }));
@@ -107,8 +107,12 @@ export default function Likes(props) {
         })}
         aria-label="liked"
         onClick={handleLike}
+        style={{
+          outline: "none !important"
+
+        }}
       >
-        <FavoriteIcon style={{ outline: "none" }} />
+        <FavoriteIcon style={{ outline: "none !important"}} />
       </IconButton>
       <Typography paragraph style={{ marginTop: 17.5, marginLeft: 10 }}>
         {numberLikes}

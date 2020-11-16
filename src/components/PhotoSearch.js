@@ -6,31 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-// const useStyles = makeStyles((theme) => ({
-//   dropdown: {
-//     position: "absolute",
-//     top: "58px",
-//     width: "300px",
-//     transform: "translateX(-45%)",
-//     padding: "1rem",
-//     overflow: "hidden",
-//     transition: "height 500ms ease",
-//   },
-//   inputRoot: {
-//     color: "inherit",
-//   },
-//   inputInput: {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-//     transition: theme.transitions.create("width"),
-//     width: "100%",
-//     [theme.breakpoints.up("md")]: {
-//       width: "20ch",
-//     },
-//   },
-// }));
-
 // Idea: pass the state change to the photosearch, set the search text here, then pass the search text to the navbar.
 // Put logic in navbar for creating a menu when the search text changes, put the logic in there for changing the search text
 // Also pop in logic for searching for users.
@@ -156,7 +131,7 @@ export default function Asynchronous() {
           <TextField
             {...params}
             label="Search users, #tags or description"
-            variant="outlined"
+            // variant="Standard"
             InputLabelProps={{
               style: {
                 "padding-left": "2em",
@@ -177,6 +152,7 @@ export default function Asynchronous() {
               ),
               style: {
                 "padding-left": "2.3em",
+                "padding-bottom": "1em",
                 "color": "white",
                 "text-align": "left",
                 "flex-grow": "unset"

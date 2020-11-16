@@ -104,12 +104,12 @@ export function PhotoUpload(props) {
         price: price,
         priceCurrency: currency,
         liked: false,
-        bookmarked: false,
         tags: tags,
       });
     } else {
       setLoading(true);
       handleClose();
+      // first upload the original image
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(
         "state_changed",
@@ -123,14 +123,17 @@ export function PhotoUpload(props) {
           alert(error.message);
         },
         () => {
+            // next, retrieve the downloadURL for the image once uploaded
           storage
             .ref("images")
             .child(image.name)
             .getDownloadURL()
             .then(async (url) => {
-              console.log("imageHeight: " + imageHeight);
-              console.log("imageWidth: " + imageWidth);
-              var parsedURL = encodeURIComponent(url);
+              //console.log("imageHeight: " + imageHeight);
+              //console.log("imageWidth: " + imageWidth);
+              var parsedURL = encodeURIComponent(url); // encode the url to convert spaces and special chars, etc
+              
+              // create the API request string, building it up piece by piece
               var watermarkedAPIURLRequest =
                 "https://textoverimage.moesif.com/image?image_url=" +
                 parsedURL +
@@ -138,12 +141,9 @@ export function PhotoUpload(props) {
                   imageWidth,
                   imageHeight
                 )}&x_align=center&y_align=middle`;
-              console.log(
-                "api request for image width: " +
-                  imageWidth +
-                  " using size: " +
-                  determineWatermarkTextSize(imageWidth, imageHeight)
-              );
+
+
+              // now perform the GET request with the API
               await fetch(watermarkedAPIURLRequest)
                 .then((response) => response.blob())
                 .then((wImage) => {
@@ -182,7 +182,6 @@ export function PhotoUpload(props) {
                             price: price,
                             priceCurrency: currency,
                             liked: false,
-                            bookmarked: false,
                             tags: tags,
                           });
                         });
@@ -205,7 +204,7 @@ export function PhotoUpload(props) {
 
     tags.forEach((tag, index) => {
       db.collection("tags")
-        .doc(tag)
+        .doc(tag.trim())
         .set({
           tagLower: tag.trim(),
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -222,7 +221,7 @@ export function PhotoUpload(props) {
       db.collection("users")
         .doc(profile)
         .collection("tagsFollowed")
-        .doc(tag)
+        .doc(tag.trim())
         .set({
           tagLower: tag.trim(),
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -308,11 +307,16 @@ export function PhotoUpload(props) {
                 Find Photo
               </Button>
               {imageName.length > 0 ? (
-                <p className='uploadTextStyle'>{imageName}</p>
-                ) : <p className='uploadTextStyleHidden'>name</p>}
+                <p className="uploadTextStyle">{imageName}</p>
+              ) : (
+                <p className="uploadTextStyleHidden">name</p>
+              )}
             </div>
 
-            <div className="imageupload__feedModal" style={{ marginTop: 20 }}>
+            <div
+              className="imageupload__feedModal"
+              style={{ marginTop: 20, width: "100.8%" }}
+            >
               <div style={{ marginLeft: 10, marginRight: 10, marginTop: 10 }}>
                 <Input
                   placeholder="Add Price"
@@ -333,7 +337,7 @@ export function PhotoUpload(props) {
                 }}
               >
                 <Input
-                  placeholder="Add Tags separated by a comma ',' (no spaces in between)"
+                  placeholder="Add Tags separated by a comma ','"
                   inputProps={{ "aria-label": "description" }}
                   style={{
                     width: "95%",
@@ -391,7 +395,6 @@ export function PhotoUpload(props) {
           src="https://image.flaticon.com/icons/svg/3233/3233027.svg"
           className="imageupload__gallery"
           alt=""
-          // TODO: Transfer all styles to CSS
           style={{ width: 40, height: 40, position: "absolute", left: 10 }}
         />
         Upload Photo

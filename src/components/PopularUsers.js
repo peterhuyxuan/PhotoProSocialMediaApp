@@ -37,6 +37,7 @@ export function PopularUsers() {
             return new Map(a.entries());
           });
         });
+      return undefined;
     });
   }, [popularUsers]);
 
@@ -53,10 +54,17 @@ export function PopularUsers() {
         onSelect={handleSelect}
         style={{ width: "50%" }}
       >
-        {popularUsers.map((users) => (
-          <Carousel.Item >
-            <img src={imageURLs.get(users.user)} style={{maxHeight: 500, borderRadius: 10}}/>
+        {popularUsers.map((users, index) => (
+          <Carousel.Item>
+            <img
+              alt={users.user}
+              src={imageURLs.get(users.user)}
+              style={{ maxHeight: 500, borderRadius: 10 }}
+            />
             <Carousel.Caption>
+              <h2 style={{ fontWeight: "bold" }}>
+                Most Popular User #{index + 1}
+              </h2>
               <Link to={`/profile/${users.user}`} style={{ color: "white" }}>
                 <h3>{users.user}</h3>
               </Link>

@@ -1,10 +1,11 @@
 import React from "react";
 import { db } from "../backend/Firebase";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Modal from "@material-ui/core/Modal";
 import "./Account.css";
 import NavigationBar from "../components/NavigationBar";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+import Modal from "@material-ui/core/Modal";
+import { makeStyles } from "@material-ui/core/styles";
 
 function getModalStyle() {
   const top = 50;
@@ -21,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   // got from PhotoUpload (paper)
   paper: {
     position: "absolute",
-    width: 500,
-    height: 343,
+    width: 350,
+    height: 100,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #DDDFE2",
     outline: "none",
@@ -36,7 +37,7 @@ export function Account(props) {
   const [email, setEmail] = React.useState("");
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [getOpen, setOpen] = React.useState(false);
   const [fullName, setFullName] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [phone, setPhone] = React.useState("");
@@ -85,19 +86,12 @@ export function Account(props) {
           });
         }
       });
-    setOpen(false);
-
-    // TODO add current user to Firebase or call a function to change variables?
+    setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
   React.useEffect(() => {
     db.collection("users")
       .doc(user)
@@ -118,81 +112,81 @@ export function Account(props) {
     <>
       <NavigationBar user={user} />
       <div className="account">
-        {/* <h1>My Account Page</h1> */}
+        <Modal open={getOpen} onClose={handleClose}>
+          <div style={modalStyle} className={classes.paper}>
+            <IconButton className="closeButton" onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+            <p className="accountConfirmation">Information Updated!</p>
+          </div>
+        </Modal>
         <div className="titleContainer">
           <p>{user}</p>
           <p>{email}</p>
         </div>
 
-          <p className="updateHeading">Update your following info</p>
-          <form>
-            <input
-              type="name"
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="Full Name"
-              value={fullName}
-            />
-            <br/>
-            <input
-              type="address"
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Address"
-              value={address}
-            />
-            <br/>
-            <input
-              type="tel"
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="Phone Number"
-              value={phone}
-            />
-            <br/>
-          </form>
-          <form>
-            <p className="updateHeading">Update Billing Details</p>
+        <p className="updateHeading">Update your following info</p>
+        <form>
+          <input
+            type="name"
+            onChange={(e) => setFullName(e.target.value)}
+            placeholder="Full Name"
+            value={fullName}
+          />
+          <br />
+          <input
+            type="address"
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Address"
+            value={address}
+          />
+          <br />
+          <input
+            type="tel"
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Phone Number"
+            value={phone}
+          />
+          <br />
+        </form>
+        <form>
+          <p className="updateHeading">Update Billing Details</p>
 
-            <input
-              type="tel"
-              onChange={(e) => setCardNo(e.target.value)}
-              placeholder="Card Number"
-              value={cardNo}
-            />
-            <br/>
-            <input
-              type="tel"
-              onChange={(e) => setMmYy(e.target.value)}
-              placeholder="MM/YY"
-              value={mmyy}
-            />
-            <br/>
-            <input
-              type="tel"
-              onChange={(e) => setCVV(e.target.value)}
-              placeholder="CVV"
-              value={cvv}
-            />
-            <br/>
-            <input
-              type="country"
-              onChange={(e) => setCountry(e.target.value)}
-              placeholder="Country"
-              value={country}
-            />
-            <br/>
-          </form>
-          <form>
-            <button
-              className="submitButton"
-              type="submit"
-              onClick={update}
-            >
-              Update Information
-            </button>
-          </form>
-
-
+          <input
+            type="tel"
+            onChange={(e) => setCardNo(e.target.value)}
+            placeholder="Card Number"
+            value={cardNo}
+          />
+          <br />
+          <input
+            type="tel"
+            onChange={(e) => setMmYy(e.target.value)}
+            placeholder="MM/YY"
+            value={mmyy}
+          />
+          <br />
+          <input
+            type="tel"
+            onChange={(e) => setCVV(e.target.value)}
+            placeholder="CVV"
+            value={cvv}
+          />
+          <br />
+          <input
+            type="country"
+            onChange={(e) => setCountry(e.target.value)}
+            placeholder="Country"
+            value={country}
+          />
+          <br />
+        </form>
+        <form>
+          <button className="submitButton" type="submit" onClick={update}>
+            Update Information
+          </button>
+        </form>
       </div>
-
     </>
   );
 }

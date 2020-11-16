@@ -79,6 +79,7 @@ export default function Purchase(props) {
       .get()
       .then((doc) => {
         const cardNo = doc.data().cardNo;
+
         if (cardNo.toString().length === 16) {
           db.collection("posts")
             .doc(postId)
@@ -88,16 +89,18 @@ export default function Purchase(props) {
           addTag();
           props.setHasPurchased(true);
           setOpenProceed(false);
-          alert("Your purchase is successful! You can now download the photo");
+
+          alert("Your purchase was successful! You can now download the photo");
         } else {
-          alert("Your credit is invalid");
+          alert(
+            "Your credit card details are invalid. Please check the card details in your profile"
+          );
           setOpenProceed(false);
         }
       });
   };
 
   const handleCloseProceed = () => {
-    // setOpenPurchaseInstructions(false);
     setOpenProceed(false);
   };
 
@@ -139,8 +142,8 @@ export default function Purchase(props) {
             </div>
             <div className="collectionButtonDivs">
               <span>
-                1. Click YES to proceed with purchase or NO to return to photo
-                feed.
+                1. Click PROCEED to proceed with purchase or CLOSE to return to
+                photo feed.
               </span>
               <br />
               <br />
@@ -184,10 +187,7 @@ export default function Purchase(props) {
         {/* <div> */}
         <Modal open={openProceed} onClose={handleCloseProceed}>
           <div style={modalStyle} className={classes.smallPaper}>
-            <IconButton
-              className="closeButton"
-              onClick={handleClosePurchaseInstructions}
-            >
+            <IconButton className="closeButton" onClick={handleCloseProceed}>
               <CloseIcon />
             </IconButton>
             <div className="purchaseHeading">

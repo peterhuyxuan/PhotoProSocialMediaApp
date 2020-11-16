@@ -6,7 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "../CardHeader";
 import { db } from "../../backend/Firebase";
-import { Link } from "react-router-dom";
+import { format } from "date-fns";
 import "./Post.css";
 import useAppUser from "../../hooks/useAppUser";
 import Likes from "./Likes";
@@ -16,7 +16,6 @@ import Bookmark from "./Bookmark";
 import Comments from "./Comments";
 import TagChips from "./TagChips";
 import Delete from "./Delete";
-import { BorderColor } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   // --------------
@@ -36,6 +35,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function getTime(date) {
+  let dateString = (date.getMinutes() === 0
+    ? format(date, "ha")
+    : format(date, "h:mma")
+  ).toLocaleLowerCase();
+  return dateString;
+}
+
+function isSameDay(date1, date2) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
+
+export function calculateDate(date) {
+  let diff = new Date(Date.now()).getTime() - date.getTime();
+  let days = Math.ceil(diff / (1000 * 3600 * 24));
+  let hours = Math.floor(diff / 1000 / 60 / 60);
+  diff -= hours * 1000 * 60 * 60;
+  let minutes = Math.floor(diff / 1000 / 60);
+
+  let timeDifference = "";
+  if (isSameDay(date, new Date(Date.now()))) {
+    if (minutes < 1) {
+      timeDifference = "now";
+    } else if (hours < 1) {
+      timeDifference = `${minutes} mins ago`;
+    } else if (hours < 8) {
+      timeDifference = `${hours} hours ago`;
+    } else if (hours < 24) {
+      timeDifference = `at ${getTime(date)}`;
+    }
+  } else if (days <= 5) {
+    timeDifference = `${days} ${days === 1 ? "day" : "days"} ago`;
+  } else {
+    timeDifference = `on ${format(date, "EEE dd/MM/yyyy")}`;
+  }
+
+  return timeDifference;
+}
+
 export function Post(props) {
   const { id: userId } = useAppUser() || {};
   const {
@@ -51,6 +93,7 @@ export function Post(props) {
     numberOfLikes,
     price,
     priceCurrency,
+    timeStamp,
   } = props;
   const classes = useStyles();
 
@@ -97,8 +140,6 @@ export function Post(props) {
     });
   }, [purchased, hasPurchased, postId, userId, profile]);
 
-  // TODO: Transfer all styles to CSS
-
   React.useEffect(() => {
     var docRef = db
       .collection("posts")
@@ -130,17 +171,24 @@ export function Post(props) {
   }, [purchased, postId, userId, imageURLProp, imageURLWatermarked]);
 
   return (
-    <Card className={classes.root} variant="outlined" style={{borderColor: '#cce6ff', borderWidth: 5, borderRadius: 20}}>
-      <Link to={`/profile/${profile}`}>
-        <CardHeader title={profile} subheader={postDescription} />
-      </Link>
-
+    <Card
+      className={classes.root}
+      variant="outlined"
+      style={{ borderColor: "#cce6ff", borderWidth: 5, borderRadius: 20 }}
+    >
+      <CardHeader
+        title={profile}
+        subheader={postDescription}
+        postId={postId}
+        timeStamp={calculateDate(timeStamp.toDate())}
+      />
       <CardMedia
         className={classes.media}
         // need to determine if the user has bought the image, and display the original or watermarked as needed
         image={imageURL}
         title={imageTitle}
       />
+
       <CardActions disableSpacing>
         <div className="div1">
           <div className="div2">
@@ -164,7 +212,11 @@ export function Post(props) {
 
             <div style={{ marginTop: 4, marginLeft: 40 }}>
               {hasPurchased === true ? (
-                <Download hasPurchased={hasPurchased} imageURL={imageURL} />
+                <Download
+                  hasPurchased={hasPurchased}
+                  imageURL={imageURL}
+                  data="fromPost"
+                />
               ) : (
                 <Purchase
                   tags={tags}
@@ -181,7 +233,7 @@ export function Post(props) {
         </div>
       </CardActions>
       <TagChips tags={tags} />
-      <Comments id={postId} />
+      <Comments id={postId} profile={profile} data="fromPost" />
     </Card>
   );
 }

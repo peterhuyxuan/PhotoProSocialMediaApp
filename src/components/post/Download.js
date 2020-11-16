@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import GetAppIcon from "@material-ui/icons/GetApp"; // download button icon
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   // got from PhotoUpload (paper)
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Download(props) {
   const classes = useStyles();
-  const { hasPurchased, imageURL } = props;
+  const { hasPurchased, imageURL, data } = props;
   const [openDownloadDialog, setOpenDownloadDialog] = React.useState(false);
 
   const handleDownloadClose = () => {
@@ -69,6 +70,7 @@ export default function Download(props) {
 
   return (
     <div>
+    {data === "fromPost" ? (
       <Button
         className={classes.downloadButton}
         variant="contained"
@@ -79,7 +81,17 @@ export default function Download(props) {
         style={{ outline: "none" }}
       >
         Download
-      </Button>
+     </Button> 
+    ) : (
+      <IconButton
+      variant="contained"
+        onClick={handleDownload}
+        style={{ outline: "none", marginTop: "7px" }}
+      >
+        <GetAppIcon />
+      </IconButton>
+    )
+    }
       <Dialog
         open={openDownloadDialog}
         aria-labelledby="alert-dialog-title"

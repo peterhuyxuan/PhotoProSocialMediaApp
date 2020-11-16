@@ -10,22 +10,21 @@ export function Login(props) {
   const [password, setPassword] = useState("");
 
   const login = (event) => {
-    event.preventDefault(); // prevents website from reloading everything you submit
+    event.preventDefault(); // prevents website from reloading everything once you submit
 
     auth
       .signInWithEmailAndPassword(email, password) // message to firebase
       .then((auth) => {
         // once you sign in, the auth variable stores info about the user
-        // console.log(auth); // log the user info (only needed once registered)
-        var query = db.collection("users").where("email", "==", email);
+        var query = db.collection("users").where("email", "==", email); // get user with matching email
         query.get().then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             var username = doc.id;
-            props.onChange(username);
+            props.onChange(username); // change props data to data related to the matching username
           });
         });
 
-        history.push("/");
+        history.push("/"); // once signed in, go back to the homepage
       })
       .catch((e) => {
         alert(e.message); // alert the error message

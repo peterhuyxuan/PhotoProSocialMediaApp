@@ -17,6 +17,16 @@
 
   }
 
+  .deleteContainer {
+    background-color: #cce6ff;
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
+    border-radius: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+  }
+
   .heading {
     font-weight: bold;
     color: #534e53;

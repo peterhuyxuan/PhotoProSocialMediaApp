@@ -6,10 +6,8 @@ import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "../CardHeader";
 import { db } from "../../backend/Firebase";
-import { Link } from "react-router-dom";
 import "./Post.css";
 import useAppUser from "../../hooks/useAppUser";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Likes from "./Likes";
 import Download from "./Download";
 import Purchase from "./Purchase";
@@ -17,6 +15,7 @@ import Bookmark from "./Bookmark";
 import Comments from "./Comments";
 import TagChips from "./TagChips";
 import Delete from "./Delete";
+import { calculateDate } from "./Post";
 
 const useStyles = makeStyles((theme) => ({
   // --------------
@@ -51,6 +50,7 @@ export function Post(props) {
     numberOfLikes,
     price,
     priceCurrency,
+    timeStamp,
   } = props;
   const classes = useStyles();
 
@@ -74,10 +74,6 @@ export function Post(props) {
     };
   }, [postId]);
 
-  const handleDelete = () => {
-    db.collection("posts").doc(postId).delete();
-  };
-
   React.useEffect(() => {
     var docRef = db // quering
       .collection("posts")
@@ -100,8 +96,6 @@ export function Post(props) {
       }
     });
   }, [purchased, hasPurchased, postId, userId, profile]);
-
-  // TODO: Transfer all styles to CSS
 
   React.useEffect(() => {
     var docRef = db
@@ -135,9 +129,12 @@ export function Post(props) {
 
   return (
     <Card className={classes.root}>
-      <Link to={`/profile/${profile}`}>
-        <CardHeader title={profile} subheader={postDescription} />
-      </Link>
+      <CardHeader
+        title={profile}
+        subheader={postDescription}
+        postId={postId}
+        timeStamp={calculateDate(timeStamp.toDate())}
+      />
       <CardMedia
         className={classes.media}
         // need to determine if the user has bought the image, and display the original or watermarked as needed
@@ -146,32 +143,40 @@ export function Post(props) {
       />
       <CardActions disableSpacing>
         <div className="div1">
-          <div className="div2">
-        <Likes
-          tags={tags}
-          id={postId}
-          liked={liked}
-          numberOfLikes={numberOfLikes}
-          />
-        <Typography paragraph style={{ marginTop: 17.5, marginLeft: 82.5 }}>
-          {price}
-          {priceCurrency}
-        </Typography>
+          <div className="div4">
+            <Likes
+              tags={tags}
+              id={postId}
+              liked={liked}
+              numberOfLikes={numberOfLikes}
+            />
+            <Typography paragraph style={{ marginTop: 17.5, marginLeft: 20 }}>
+              {price}
+              {priceCurrency}
+            </Typography>
 
-        {hasPurchased === true ? (
-          <Download hasPurchased={hasPurchased} imageURL={imageURL} />
-          ) : (
-            <Purchase tags={tags} id={postId} setHasPurchased={setHasPurchased} />
+            {hasPurchased === true ? (
+              <Download
+                hasPurchased={hasPurchased}
+                imageURL={imageURL}
+                data="searchFeedPost"
+              />
+            ) : (
+              <Purchase
+                tags={tags}
+                id={postId}
+                setHasPurchased={setHasPurchased}
+              />
             )}
-        </div>
-        <div className="div3">
-          <Bookmark tags={tags} id={postId} bookmarked={bookmarked} />
-          <Delete profile={profile} userId={userId} postId={postId} />
-        </div>
+          </div>
+          <div className="div3">
+            <Bookmark tags={tags} id={postId} bookmarked={bookmarked} />
+            <Delete profile={profile} userId={userId} postId={postId} />
+          </div>
         </div>
       </CardActions>
       <TagChips tags={tags} />
-      <Comments id={postId} />
+      <Comments id={postId} profile={profile} data="searchFeedPost" />
     </Card>
   );
 }
