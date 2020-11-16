@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { auth, db } from "../backend/Firebase.js";
 
+// Function for the login page
 export function Login(props) {
   const [email, setEmail] = useState("");
   const history = useHistory("");
@@ -31,6 +32,7 @@ export function Login(props) {
       });
   };
 
+  // Render the login page
   return (
     <div className="login">
       <div className="login_container">
@@ -60,9 +62,7 @@ export function Login(props) {
           </center>
           <center>
             <Link to="/register">
-              <button className="login_login">
-                Create New Account
-              </button>
+              <button className="login_login">Create New Account</button>
             </Link>
           </center>
         </form>

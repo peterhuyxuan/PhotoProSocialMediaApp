@@ -5,11 +5,13 @@ import useAppUser from "../hooks/useAppUser";
 import NavigationBar from "../components/NavigationBar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+// Function to view individual posts
 export function IndividualPost(props) {
   const { user } = props;
   const [post, setPost] = React.useState(null);
   const { bookmarks } = useAppUser();
 
+  // Getting the post based on the post id from firebase
   React.useEffect(() => {
     db.collection("posts")
       .doc(props.match.params.postId)
@@ -26,6 +28,7 @@ export function IndividualPost(props) {
       );
   }, [props.match.params.postId, bookmarks]);
 
+  // Rendering the single post
   return (
     <>
       <NavigationBar user={user} />

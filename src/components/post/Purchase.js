@@ -9,6 +9,7 @@ import useAppUser from "../../hooks/useAppUser";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 
+// Modal style
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -20,8 +21,8 @@ function getModalStyle() {
   };
 }
 
+// Styles for the purchase button and modal
 const useStyles = makeStyles((theme) => ({
-  // got from PhotoUpload (paper)
   paper: {
     position: "absolute",
     width: 400,
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     borderRadius: "20px",
   },
-  // --------------
   buyButton: {
     margin: theme.spacing(1),
   },
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Function for the Purchase component
 export default function Purchase(props) {
   const classes = useStyles();
   const { id: userId } = useAppUser() || {};
@@ -60,50 +61,58 @@ export default function Purchase(props) {
   ] = React.useState(false);
   const [openProceed, setOpenProceed] = React.useState(false);
 
+  // Open the first purchase modal
   const handleBuy = () => {
     setOpenPurchaseInstructions(true);
   };
 
+  // Close the first purchase modal
   const handleClosePurchaseInstructions = () => {
     setOpenPurchaseInstructions(false);
   };
 
+  // Open the second purchase modal
   const handleProceed = () => {
     setOpenPurchaseInstructions(false);
     setOpenProceed(true);
   };
 
-  const handleProceedCheck = () => {
-    db.collection("users")
+  // Logic to confirm the purchase of the image
+  const handleProceedCheck = async () => {
+    var cardNo;
+    await db
+      .collection("users")
       .doc(userId)
       .get()
       .then((doc) => {
-        const cardNo = doc.data().cardNo;
-
-        if (cardNo.toString().length === 16) {
-          db.collection("posts")
-            .doc(postId)
-            .collection("purchased")
-            .doc(userId)
-            .set({});
-          addTag();
-          props.setHasPurchased(true);
-          setOpenProceed(false);
-
-          alert("Your purchase was successful! You can now download the photo");
-        } else {
-          alert(
-            "Your credit card details are invalid. Please check the card details in your profile"
-          );
-          setOpenProceed(false);
-        }
+        cardNo = doc.data().cardNo;
       });
+
+    if (cardNo.toString().length === 16) {
+      await db
+        .collection("posts")
+        .doc(postId)
+        .collection("purchased")
+        .doc(userId)
+        .set({});
+      await addTag();
+      await props.setHasPurchased(true);
+      setOpenProceed(false);
+      alert("Purchase successful!");
+    } else {
+      setOpenProceed(false);
+      alert(
+        "Your credit card details are invalid. Please check the card details in your profile"
+      );
+    }
   };
 
+  // Close the second purchase modal
   const handleCloseProceed = () => {
     setOpenProceed(false);
   };
 
+  // Adding tha tags that the user will follow after purchasing the image
   function addTag() {
     tags.forEach((tag, index) => {
       db.collection("users")
@@ -123,6 +132,7 @@ export default function Purchase(props) {
     });
   }
 
+  // Rendering the purchase image button and different modal
   return (
     <div>
       <div className="purchaseImage">
@@ -184,7 +194,6 @@ export default function Purchase(props) {
       </div>
 
       <div className="purchaseImageProceed">
-        {/* <div> */}
         <Modal open={openProceed} onClose={handleCloseProceed}>
           <div style={modalStyle} className={classes.smallPaper}>
             <IconButton className="closeButton" onClick={handleCloseProceed}>

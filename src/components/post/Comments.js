@@ -18,6 +18,7 @@ import "./Post.css";
 import { calculateDate } from "./Post";
 import DeleteComment from "./DeleteComment";
 
+// Styles for this component
 const useStyles = makeStyles((theme) => ({
   expand: {
     transform: "rotate(0deg)",
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Rendering comments
 export default function Comments(props) {
   const { id: userId } = useAppUser() || {};
   const { id: postId, profile, data } = props;
@@ -51,6 +53,8 @@ export default function Comments(props) {
   const [viewCommentText, setViewCommentText] = React.useState(
     "View all comments..."
   );
+
+  // Collecting all comments from Firebase
   React.useEffect(() => {
     let unsubscribeComment;
     if (postId) {
@@ -72,8 +76,10 @@ export default function Comments(props) {
     };
   }, [postId, comments]);
 
+  // Assigns text to minimise or view all comments
   const handleChangeText = (text) => setViewCommentText(text);
 
+  // Determine button to view all comments or minmise comments
   const handleExpandClick = () => {
     if (expanded) {
       handleChangeText("View all comments...");
@@ -83,6 +89,7 @@ export default function Comments(props) {
     setExpanded(!expanded);
   };
 
+  // Logic to post comments into Firebase and rendering it
   const handlePostComment = (event) => {
     event.preventDefault();
     (async () => {
@@ -95,6 +102,7 @@ export default function Comments(props) {
     })();
   };
 
+  // Rendering all of the comments if it's on the feed or search results feed
   return (
     <>
       {" "}
@@ -153,6 +161,7 @@ export default function Comments(props) {
             paddingBottom: "0px",
           }}
         >
+          {/* Viewing only the first comments that is unexpanded */}
           {comments.slice(0, 1).map((comment) => (
             <div key={comment.id} className="mainPostCommentDiv">
               <Link to={`/profile/${comment.user}`}>
@@ -192,6 +201,7 @@ export default function Comments(props) {
           ))}
         </CardContent>
       )}
+      {/* Viewing all of the remaining comments that are expanded */}
       {data === "fromPost" ? (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent
@@ -250,6 +260,7 @@ export default function Comments(props) {
           </CardContent>
         </Collapse>
       ) : undefined}
+      {/* Text box to enter your comment */}
       <form onSubmit={handlePostComment}>
         <FormControl
           fullWidth

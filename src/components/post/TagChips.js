@@ -18,9 +18,17 @@ export default function TagChips(props) {
     });
   };
 
+  // Rendering all the tags into chips by mapping through firebase
   return (
-    <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", paddingLeft: 20}}>
-      <Typography paragraph style={{ marginRight: 20}}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "baseline",
+        flexWrap: "wrap",
+        paddingLeft: 20,
+      }}
+    >
+      <Typography paragraph style={{ marginRight: 20 }}>
         Tags:{" "}
       </Typography>
       {tags.map((tag, index) => (
@@ -29,7 +37,7 @@ export default function TagChips(props) {
           key={index}
           clickable
           onClick={handleChipClick}
-          style={{ marignLeft: 5, marginRight: 5}}
+          style={{ marignLeft: 5, marginRight: 5 }}
         />
       ))}
     </div>

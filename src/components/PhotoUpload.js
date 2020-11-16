@@ -9,6 +9,7 @@ import { storage, db } from "../backend/Firebase";
 import "./PhotoUpload.css";
 import firebase from "firebase";
 
+// Modal styles
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -20,6 +21,7 @@ function getModalStyle() {
   };
 }
 
+// Styles for the photo upload modal
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
@@ -54,6 +56,7 @@ function determineWatermarkTextSize(imgWidth, imgHeight) {
   }
 }
 
+// Function for the photoupload component
 export function PhotoUpload(props) {
   const { profile } = props;
   const classes = useStyles();
@@ -74,18 +77,22 @@ export function PhotoUpload(props) {
   const [imageHeight, setImageHeight] = useState(0);
   const [imageName, setImageName] = useState("");
 
+  // Uploading the image from your files
   const uploadFileWithClick = () => {
     document.getElementsByClassName("imageFile")[0].click();
   };
 
+  // Open the modal
   const handleOpen = () => {
     setOpen(true);
   };
 
+  // Close the modal
   const handleClose = () => {
     setOpen(false);
   };
 
+  // Logic to upload images to the Firebase
   const handleUpload = (event) => {
     event.preventDefault();
     // Random assignment to prevent warning popups
@@ -123,16 +130,14 @@ export function PhotoUpload(props) {
           alert(error.message);
         },
         () => {
-            // next, retrieve the downloadURL for the image once uploaded
+          // next, retrieve the downloadURL for the image once uploaded
           storage
             .ref("images")
             .child(image.name)
             .getDownloadURL()
             .then(async (url) => {
-              //console.log("imageHeight: " + imageHeight);
-              //console.log("imageWidth: " + imageWidth);
               var parsedURL = encodeURIComponent(url); // encode the url to convert spaces and special chars, etc
-              
+
               // create the API request string, building it up piece by piece
               var watermarkedAPIURLRequest =
                 "https://textoverimage.moesif.com/image?image_url=" +
@@ -142,8 +147,7 @@ export function PhotoUpload(props) {
                   imageHeight
                 )}&x_align=center&y_align=middle`;
 
-
-              // now perform the GET request with the API
+              // now perform the GET request with the API and waiting for a response before uploading
               await fetch(watermarkedAPIURLRequest)
                 .then((response) => response.blob())
                 .then((wImage) => {
@@ -202,6 +206,7 @@ export function PhotoUpload(props) {
       );
     }
 
+    // Splitting each tags from the user input to the tag search suggestion
     tags.forEach((tag, index) => {
       db.collection("tags")
         .doc(tag.trim())
@@ -210,13 +215,14 @@ export function PhotoUpload(props) {
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
-          // console.log(`Added tag: ${tag}`);
+          console.log(`Added tag: ${tag}`);
         })
         .catch(() => {
           console.error(`Error writing tag: ${tag}`);
         });
     });
 
+    // Splitting each tags from the user input to the tags that the user follows
     tags.forEach((tag, index) => {
       db.collection("users")
         .doc(profile)
@@ -227,7 +233,7 @@ export function PhotoUpload(props) {
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
-          // console.log(`Added tags followed: ${tag}`);
+          console.log(`Added tags followed: ${tag}`);
         })
         .catch(() => {
           console.error(`Error writing tag followed: ${tag}`);
@@ -235,6 +241,7 @@ export function PhotoUpload(props) {
     });
   };
 
+  // Reading the images that is being uploaded
   const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -255,6 +262,7 @@ export function PhotoUpload(props) {
     }
   };
 
+  // Rendering the modal to upload image for your post
   return (
     <div className="imageupload">
       <Modal open={open} onClose={handleClose}>

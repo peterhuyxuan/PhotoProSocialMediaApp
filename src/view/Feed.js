@@ -12,6 +12,7 @@ export function Feed(props) {
   const { bookmarks } = useAppUser();
   const [tagsFollowed, setTagsFollowed] = React.useState([]);
 
+  // Getting the top 10 tags that the user followed
   React.useEffect(() => {
     const tags = db
       .collection("users")
@@ -28,6 +29,7 @@ export function Feed(props) {
     };
   }, [user]);
 
+  // Getting all of the posts
   React.useEffect(() => {
     if (tagsFollowed === undefined) return;
 
@@ -52,6 +54,7 @@ export function Feed(props) {
 
     var postIdOfTags = [];
 
+    // Setting posts with the tags that the user follow in a map with the tags kep
     const unsubscribeTagsPost = db
       .collection("posts")
       .where("tags", "array-contains-any", tagsFollowed)
@@ -68,6 +71,8 @@ export function Feed(props) {
           return new Map(a.entries());
         });
       });
+
+    // Get all the remaining posts that the user doesn't follow in a map with the remainder key
     const unsubscribeRemainingPost = postdb.onSnapshot((snapshot) => {
       setPosts((a) => {
         a.set(
@@ -90,6 +95,7 @@ export function Feed(props) {
     };
   }, [tagsFollowed]);
 
+  // Combining the posts of the tags the user follows with the rest
   const allPosts = posts.get("all") || [];
   const remainingPost = posts.get("remainder") || [];
   const tagPosts = posts.get("tags") || [];
@@ -102,6 +108,7 @@ export function Feed(props) {
       ? combinedTagPosts
       : allPosts) || [];
 
+  // Setting all of the post with whether the user bookmarked the post or not as another field
   const _posts = React.useMemo(
     () =>
       postsSet.map((post) =>
@@ -112,6 +119,7 @@ export function Feed(props) {
     [postsSet, bookmarks]
   );
 
+  // Count all of the total number of likes that each user has
   React.useEffect(() => {
     let userLikes = {};
     _posts.map((post) => {
@@ -128,6 +136,7 @@ export function Feed(props) {
     }
   }, [_posts]);
 
+  // Rendering the Feed of posts with the navbar and photoupload component
   return (
     <>
       <NavigationBar user={user} />

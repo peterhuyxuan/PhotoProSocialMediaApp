@@ -38,6 +38,7 @@ export const styles = {
   timeStampHeader: {},
 };
 
+// Modified version of the original CardHeader element from MaterialUI
 const CardHeader = React.forwardRef(function CardHeader(props, ref) {
   const {
     action,
@@ -55,6 +56,7 @@ const CardHeader = React.forwardRef(function CardHeader(props, ref) {
     ...other
   } = props;
 
+  // Displaying the name of the contributer who uploaded the image with the link to their profile
   let title = titleProp;
   if (title != null && title.type !== Typography && !disableTypography) {
     title = (
@@ -72,6 +74,7 @@ const CardHeader = React.forwardRef(function CardHeader(props, ref) {
     );
   }
 
+  // Post title with the link to the original post itself
   let subheader = subheaderProp;
   if (
     subheader != null &&
@@ -94,6 +97,7 @@ const CardHeader = React.forwardRef(function CardHeader(props, ref) {
     );
   }
 
+  // Header for the post timestamp
   let timeStampHeader = subheaderProp;
   if (
     timeStampHeader != null &&

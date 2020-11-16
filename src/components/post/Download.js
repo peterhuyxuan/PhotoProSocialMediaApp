@@ -9,8 +9,8 @@ import GetAppIcon from "@material-ui/icons/GetApp"; // download button icon
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 
+// Style for the download button
 const useStyles = makeStyles((theme) => ({
-  // got from PhotoUpload (paper)
   paper: {
     position: "absolute",
     width: 500,
@@ -21,25 +21,28 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     borderRadius: "5px",
   },
-  // --------------
   buyButton: {
     margin: theme.spacing(1),
   },
 }));
 
+// Component for the download button
 export default function Download(props) {
   const classes = useStyles();
   const { hasPurchased, imageURL, data } = props;
   const [openDownloadDialog, setOpenDownloadDialog] = React.useState(false);
 
+  // Closing the download dialog
   const handleDownloadClose = () => {
     setOpenDownloadDialog(false);
   };
 
+  // Opening the download dialog
   const handleDownload = () => {
     setOpenDownloadDialog(true);
   };
 
+  // Generate message for dialog
   function generateDownloadPopupContent() {
     if (hasPurchased) {
       return "Here is the download link";
@@ -68,30 +71,32 @@ export default function Download(props) {
     window.open(imageURL, "_blank");
   }
 
+  // Render the download button either from the post or the search result feed
   return (
     <div>
-    {data === "fromPost" ? (
-      <Button
-        className={classes.downloadButton}
-        variant="contained"
-        color="default"
-        size="small"
-        startIcon={<GetAppIcon />}
-        onClick={handleDownload}
-        style={{ outline: "none" }}
-      >
-        Download
-     </Button> 
-    ) : (
-      <IconButton
-      variant="contained"
-        onClick={handleDownload}
-        style={{ outline: "none", marginTop: "7px" }}
-      >
-        <GetAppIcon />
-      </IconButton>
-    )
-    }
+      {data === "fromPost" ? (
+        // Rendering the button
+        <Button
+          className={classes.downloadButton}
+          variant="contained"
+          color="default"
+          size="small"
+          startIcon={<GetAppIcon />}
+          onClick={handleDownload}
+          style={{ outline: "none" }}
+        >
+          Download
+        </Button>
+      ) : (
+        <IconButton
+          variant="contained"
+          onClick={handleDownload}
+          style={{ outline: "none", marginTop: "7px" }}
+        >
+          <GetAppIcon />
+        </IconButton>
+      )}
+      {/* Rendering the popup dialog */}
       <Dialog
         open={openDownloadDialog}
         aria-labelledby="alert-dialog-title"

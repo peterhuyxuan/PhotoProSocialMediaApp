@@ -12,6 +12,7 @@ export function Profile(props) {
   const [posts, setPosts] = React.useState(new Map());
   const { id: userId, bookmarks } = useAppUser();
 
+  // Get the email of the user
   db.collection("users")
     .doc(props.match.params.userId)
     .get()
@@ -42,6 +43,7 @@ export function Profile(props) {
 
   const allPosts = posts.get("all") || [];
 
+  // Setting all of the post with whether the user bookmarked the post or not as another field
   const _posts = React.useMemo(
     () =>
       allPosts.map((post) =>
@@ -52,6 +54,7 @@ export function Profile(props) {
     [allPosts, bookmarks]
   );
 
+  // Count all of the total number of likes that each user has
   React.useEffect(() => {
     let userLikes = {};
     _posts.map((post) => {
@@ -68,6 +71,7 @@ export function Profile(props) {
     }
   }, [_posts]);
 
+  // Rendering the profile of the user containing all their posts
   return (
     <>
       <NavigationBar user={user} />

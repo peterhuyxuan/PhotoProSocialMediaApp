@@ -12,11 +12,12 @@ export function Register(props) {
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [cardNo, setCardNo] = useState(""); // dodgey storage of card no....
+  const [cardNo, setCardNo] = useState(""); // unoptimal storage of card no....
   const [mmyy, setMmYy] = useState("");
   const [cvv, setCVV] = useState("");
   const [country, setCountry] = useState("");
 
+  // Processing the registration of a new account of a new user
   const register = (event) => {
     event.preventDefault(); // prevents website from reloading everything once you submit
 
@@ -44,16 +45,16 @@ export function Register(props) {
       .doc(username)
       .get()
       .then(function (doc) {
+        // Checking if the user already exist or not
         if (doc.exists) {
           alert("Username already exist. Please enter another username!");
-          // console.log("Doc exist");
         } else {
-          // console.log("Doc doesn't exist");
           // AUTHENTICATION PART
           auth
             .createUserWithEmailAndPassword(email, password)
             .then((auth) => {
-              if (auth.user) { //auth.user refers to all the user info, e.g. email, name
+              if (auth.user) {
+                //auth.user refers to all the user info, e.g. email, name
                 auth.user
                   .updateProfile({
                     username: username, // update the username to match the one in auth.user
@@ -68,8 +69,8 @@ export function Register(props) {
               alert(e.message); // if creating a user is unsuccessful
             });
 
+          // Setting new user on Firebase
           db.collection("users").doc(username).set({
-            // removes the hash on cloud firestore
             username: username,
             email: email,
             fullName: fullName,
@@ -79,12 +80,13 @@ export function Register(props) {
             mmyy: mmyy,
             cvv: cvv,
             country: country,
-            username_insensitive: username.trim().toLowerCase(), // Zac adding this to make searching easier.
+            username_insensitive: username.trim().toLowerCase(),
           });
         }
       });
   };
 
+  // Rendering the registration page
   return (
     <div className="register">
       <div className="register_container">
@@ -147,7 +149,7 @@ export function Register(props) {
             <input
               type="number"
               onChange={(e) => setMmYy(e.target.value)}
-              placeholder="MM/YY"
+              placeholder="MMYY"
             />
             <input
               type="number"

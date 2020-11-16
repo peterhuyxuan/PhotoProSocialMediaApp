@@ -8,29 +8,30 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import useAppUser from "../hooks/useAppUser";
 import NavigationBar from "../components/NavigationBar";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
 
+// Style of the SearchFeed
 const useStyles = makeStyles((theme) => ({
   // --------------
   buttonGroup: {
-    "padding": "20px",
-    "width": "75%",
-    "margin": "auto",
+    padding: "20px",
+    width: "75%",
+    margin: "auto",
     "justify-content": "center",
-    "display": "flex",
+    display: "flex",
     "flex-direction:": "row",
   },
   button: {
-    "flex": "1",
+    flex: "1",
     "font-style": "italic",
-    "font-weight": "bold"
+    "font-weight": "bold",
   },
   gridList: {
-    "display": "flex", 
+    display: "flex",
     "justify-content": "center",
     "flex-direction:": "row",
-    "backgroundColor:": "pink"
+    "backgroundColor:": "pink",
   },
   title: {
     "padding-top": "20px",
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+// Function for the SearchFeed page
 export function SearchFeed(props) {
   const {
     user,
@@ -73,6 +74,7 @@ export function SearchFeed(props) {
 
   var postsdb = db.collection("posts");
 
+  // Returnin the results of user when searching for the tag
   React.useEffect(() => {
     if (searchType === "tag") {
       var query = postsdb
@@ -99,7 +101,7 @@ export function SearchFeed(props) {
       setPosts(
         snapshot.docs.map((doc) => Object.assign({ id: doc.id }, doc.data()))
       );
-    // Display feed posts from followed tags
+      // Display feed posts from followed tags
       if (posts.length > 0 && searchType === "tag") {
         db.collection("users")
           .doc(user)
@@ -113,6 +115,7 @@ export function SearchFeed(props) {
     });
   }, [searchType, postsdb, user, posts.length, searchText]);
 
+  // Declaring the respective list of posts with the bookmark field
   const _posts = React.useMemo(
     () =>
       posts.map((post) =>
@@ -123,9 +126,9 @@ export function SearchFeed(props) {
     [posts, bookmarks]
   );
 
+  // Rendering the search feed
   return (
     <>
-      
       <NavigationBar user={user} />
       <h1 className={classes.title}>{searchText} </h1>
       <ToggleButtonGroup
@@ -135,24 +138,33 @@ export function SearchFeed(props) {
         aria-label="User or Tag Search"
         className={classes.buttonGroup}
       >
+        {/* Toggle between search categories */}
         <ToggleButton value="tag" aria-label="tag" className={classes.button}>
           Tag
         </ToggleButton>
-        <ToggleButton value="user" aria-label="users" className={classes.button}>
+        <ToggleButton
+          value="user"
+          aria-label="users"
+          className={classes.button}
+        >
           Users
         </ToggleButton>
-        <ToggleButton value="description" aria-label="description" className={classes.button}>
+        <ToggleButton
+          value="description"
+          aria-label="description"
+          className={classes.button}
+        >
           Description
         </ToggleButton>
       </ToggleButtonGroup>
-      <GridList cellHeight={800} cols={3} className={classes.gridList} >
-      {_posts.map((post) => (
-        <GridListTile key={post.id} cols={1}  >
-           <Post key={post.id} {...post} />
-        </GridListTile>
-      ))}
+      {/* Rending the all the posts in a grid format */}
+      <GridList cellHeight={800} cols={3} className={classes.gridList}>
+        {_posts.map((post) => (
+          <GridListTile key={post.id} cols={1}>
+            <Post key={post.id} {...post} />
+          </GridListTile>
+        ))}
       </GridList>
-      
     </>
   );
 }

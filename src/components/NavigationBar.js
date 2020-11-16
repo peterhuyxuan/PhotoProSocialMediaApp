@@ -16,6 +16,7 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import SearchIcon from "@material-ui/icons/Search";
 import PhotoSearch from "./PhotoSearch";
 
+// Styles for the Nav Bar
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -79,9 +80,9 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-
 }));
 
+// Function for the Navigation Bar component and the redirection to the different pages
 export default function NavigationBar(props) {
   const { user } = props;
   const classes = useStyles();
@@ -114,7 +115,6 @@ export default function NavigationBar(props) {
 
   const handleLogoutClick = (event) => {
     event.preventDefault();
-    // auth.signOut();
     history.push("/login");
   };
 
@@ -140,10 +140,10 @@ export default function NavigationBar(props) {
     </Menu>
   );
 
+  // Rendering the Navigation Bar
   return (
-    // <>
     <div className={classes.grow} style={{ width: "100%", marginBottom: 75 }}>
-      <AppBar position="fixed" style={{padding: 5}}>
+      <AppBar position="fixed" style={{ padding: 5 }}>
         <Toolbar>
           <Button
             onClick={handleHomeClick}
@@ -165,7 +165,7 @@ export default function NavigationBar(props) {
               aria-label="collections"
               color="inherit"
               onClick={handleCollectionClick}
-              style={{outline: "none" }}
+              style={{ outline: "none" }}
             >
               <Badge color="secondary">
                 <PhotoLibraryIcon />
@@ -178,7 +178,7 @@ export default function NavigationBar(props) {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              style={{outline: "none" }}
+              style={{ outline: "none" }}
               color="inherit"
             >
               <AccountCircle />
@@ -188,6 +188,5 @@ export default function NavigationBar(props) {
       </AppBar>
       {renderMenu}
     </div>
-    // </>
   );
 }

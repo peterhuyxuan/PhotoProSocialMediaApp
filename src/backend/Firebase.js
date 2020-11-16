@@ -1,5 +1,6 @@
 import firebase from "firebase";
 
+// Configuring and initialising Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDqY7ORYxXYOaFO5cULMp-3YmzOigSj8kI",
   authDomain: "photopro-f262b.firebaseapp.com",

@@ -17,6 +17,7 @@ import TagChips from "./TagChips";
 import Delete from "./Delete";
 import { calculateDate } from "./Post";
 
+// Style for the Search Feed Post
 const useStyles = makeStyles((theme) => ({
   // --------------
   root: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Function for the Post component in the Search Feed
 export function Post(props) {
   const { id: userId } = useAppUser() || {};
   const {
@@ -46,7 +48,6 @@ export function Post(props) {
     postDescription,
     imageTitle,
     tags,
-    liked,
     numberOfLikes,
     price,
     priceCurrency,
@@ -58,6 +59,7 @@ export function Post(props) {
   const [purchased, setPurchased] = React.useState([]);
   const [hasPurchased, setHasPurchased] = React.useState(false);
 
+  // Getting from Firebase all the users that liked the post
   React.useEffect(() => {
     let unsubscribePurchased;
     if (postId) {
@@ -74,6 +76,7 @@ export function Post(props) {
     };
   }, [postId]);
 
+  // Checking if the current user have purchased the image of the post or not
   React.useEffect(() => {
     var docRef = db // quering
       .collection("posts")
@@ -97,6 +100,7 @@ export function Post(props) {
     });
   }, [purchased, hasPurchased, postId, userId, profile]);
 
+  // Determining and rendering the watermarked and unwatermarked images
   React.useEffect(() => {
     var docRef = db
       .collection("posts")
@@ -127,8 +131,10 @@ export function Post(props) {
     });
   }, [purchased, postId, userId, imageURLProp, imageURLWatermarked]);
 
+  // Rendering the post
   return (
     <Card className={classes.root}>
+      {/* Rendering the header and image */}
       <CardHeader
         title={profile}
         subheader={postDescription}
@@ -137,19 +143,14 @@ export function Post(props) {
       />
       <CardMedia
         className={classes.media}
-        // need to determine if the user has bought the image, and display the original or watermarked as needed
         image={imageURL}
         title={imageTitle}
       />
+      {/* Rendering all the elements of the posts */}
       <CardActions disableSpacing>
         <div className="div1">
           <div className="div4">
-            <Likes
-              tags={tags}
-              id={postId}
-              liked={liked}
-              numberOfLikes={numberOfLikes}
-            />
+            <Likes tags={tags} id={postId} numberOfLikes={numberOfLikes} />
             <Typography paragraph style={{ marginTop: 17.5, marginLeft: 20 }}>
               {price}
               {priceCurrency}
@@ -175,6 +176,7 @@ export function Post(props) {
           </div>
         </div>
       </CardActions>
+      {/* Rendering all of the tags in the posts and the comments */}
       <TagChips tags={tags} />
       <Comments id={postId} profile={profile} data="searchFeedPost" />
     </Card>

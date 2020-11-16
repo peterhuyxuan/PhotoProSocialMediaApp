@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 
+// Style for Modal
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -18,8 +19,8 @@ function getModalStyle() {
   };
 }
 
+// Style for the Account page
 const useStyles = makeStyles((theme) => ({
-  // got from PhotoUpload (paper)
   paper: {
     position: "absolute",
     width: 350,
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Function for the Account page
 export function Account(props) {
   const { user } = props;
   const [email, setEmail] = React.useState("");
@@ -46,6 +48,7 @@ export function Account(props) {
   const [cvv, setCVV] = React.useState("");
   const [country, setCountry] = React.useState("");
 
+  // Updating the user information
   const update = (event) => {
     event.preventDefault();
 
@@ -89,9 +92,12 @@ export function Account(props) {
     setOpen(true);
   };
 
+  // Closing the modal
   const handleClose = () => {
     setOpen(false);
   };
+
+  // Getting all the stored user information
   React.useEffect(() => {
     db.collection("users")
       .doc(user)
@@ -108,6 +114,8 @@ export function Account(props) {
         setCountry(doc.data().country);
       });
   }, [user]);
+
+  // Rendering the account page
   return (
     <>
       <NavigationBar user={user} />
@@ -162,7 +170,7 @@ export function Account(props) {
           <input
             type="tel"
             onChange={(e) => setMmYy(e.target.value)}
-            placeholder="MM/YY"
+            placeholder="MMYY"
             value={mmyy}
           />
           <br />

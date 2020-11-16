@@ -9,6 +9,7 @@ import { db } from "../../backend/Firebase";
 import firebase from "firebase";
 import Typography from "@material-ui/core/Typography";
 
+// Styles for the like button
 const useStyles = makeStyles((theme) => ({
   liked: {
     outline: "none !important",
@@ -20,20 +21,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Component for the like button
 export default function Likes(props) {
   const classes = useStyles();
 
   const { id: userId } = useAppUser() || {};
 
-  const { id: postId, liked, numberOfLikes, tags } = props;
+  const { id: postId, numberOfLikes, tags } = props;
 
-  const [hasLiked, setHasLiked] = React.useState(liked);
+  const [likes, setLikes] = React.useState([]);
+  const [hasLiked, setHasLiked] = React.useState(false);
   const [numberLikes, setNumberLikes] = React.useState(numberOfLikes);
 
+  // Getting all of the users who liked the post and how many people liked the post
   React.useEffect(() => {
     let unsubscribeLikes;
+    let unsubscribeNumberLikes;
     if (postId) {
       unsubscribeLikes = db
+        .collection("posts")
+        .doc(postId)
+        .collection("likes")
+        .onSnapshot((snapshot) => {
+          setLikes(snapshot.docs.map(({ id }) => id));
+        });
+    }
+    if (postId) {
+      unsubscribeNumberLikes = db
         .collection("posts")
         .doc(postId)
         .onSnapshot((doc) => {
@@ -42,9 +56,36 @@ export default function Likes(props) {
     }
     return () => {
       unsubscribeLikes();
+      unsubscribeNumberLikes();
     };
   }, [postId, numberLikes]);
 
+  // Determing whether the user like the post or not
+  React.useEffect(() => {
+    var docRef = db // quering
+      .collection("posts")
+      .doc(postId)
+      .collection("likes")
+      .doc(userId); // checking if a certain user ID has a post liked
+    docRef.get().then(function (doc) {
+      if (doc.exists) {
+        // if they have liked the image
+        db.collection("posts")
+          .doc(postId)
+          .get()
+          .then(function (doc) {
+            // Making sure the post is liked if the post has more than 0 likes
+            if (doc.data().numberOfLikes !== 0) {
+              setHasLiked(true);
+            } else {
+              setHasLiked(false);
+            }
+          });
+      }
+    });
+  }, [likes, hasLiked, postId, userId]);
+
+  // Following the tags of the post after the user likes the post
   function addTag() {
     tags.forEach((tag, index) => {
       db.collection("users")
@@ -64,9 +105,9 @@ export default function Likes(props) {
     });
   }
 
+  // Logic to process and render when the user likes the post and updates it to Firebase
   const handleLike = (event) => {
     event.preventDefault();
-    // console.log(numberLikes);
     let likeAmount;
     let likedStatus;
     if (!hasLiked) {
@@ -81,8 +122,13 @@ export default function Likes(props) {
       addTag();
     } else {
       setHasLiked(false);
-      setNumberLikes(numberLikes - 1);
-      likeAmount = -1;
+      if (numberLikes - 1 < 0) {
+        likeAmount = 0;
+        setNumberLikes(0);
+      } else {
+        likeAmount = -1;
+        setNumberLikes(numberLikes - 1);
+      }
       likedStatus = false;
       db.collection("posts")
         .doc(postId)
@@ -95,10 +141,12 @@ export default function Likes(props) {
       .doc(postId)
       .update({
         liked: likedStatus,
-        numberOfLikes: numberOfLikes + likeAmount,
+        numberOfLikes:
+          numberOfLikes + likeAmount < 0 ? 0 : numberOfLikes + likeAmount,
       });
   };
 
+  // Rendering the like and unliked button
   return (
     <>
       <IconButton
@@ -108,11 +156,10 @@ export default function Likes(props) {
         aria-label="liked"
         onClick={handleLike}
         style={{
-          outline: "none !important"
-
+          outline: "none !important",
         }}
       >
-        <FavoriteIcon style={{ outline: "none !important"}} />
+        <FavoriteIcon style={{ outline: "none !important" }} />
       </IconButton>
       <Typography paragraph style={{ marginTop: 17.5, marginLeft: 10 }}>
         {numberLikes}

@@ -17,6 +17,7 @@ import Comments from "./Comments";
 import TagChips from "./TagChips";
 import Delete from "./Delete";
 
+// Styles for the post component
 const useStyles = makeStyles((theme) => ({
   // --------------
   root: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Function to return the formatted time in string format
 function getTime(date) {
   let dateString = (date.getMinutes() === 0
     ? format(date, "ha")
@@ -43,6 +45,7 @@ function getTime(date) {
   return dateString;
 }
 
+// Checking if two dates are on the same day or not
 function isSameDay(date1, date2) {
   return (
     date1.getFullYear() === date2.getFullYear() &&
@@ -51,6 +54,7 @@ function isSameDay(date1, date2) {
   );
 }
 
+// Calculating the timestamp and returning the string format
 export function calculateDate(date) {
   let diff = new Date(Date.now()).getTime() - date.getTime();
   let days = Math.ceil(diff / (1000 * 3600 * 24));
@@ -78,6 +82,7 @@ export function calculateDate(date) {
   return timeDifference;
 }
 
+// Function for the post component
 export function Post(props) {
   const { id: userId } = useAppUser() || {};
   const {
@@ -89,7 +94,6 @@ export function Post(props) {
     postDescription,
     imageTitle,
     tags,
-    liked,
     numberOfLikes,
     price,
     priceCurrency,
@@ -101,6 +105,7 @@ export function Post(props) {
   const [purchased, setPurchased] = React.useState([]);
   const [hasPurchased, setHasPurchased] = React.useState(false);
 
+  // Getting from Firebase all the users that liked the post
   React.useEffect(() => {
     let unsubscribePurchased;
     if (postId) {
@@ -117,6 +122,7 @@ export function Post(props) {
     };
   }, [postId]);
 
+  // Checking if the current user have purchased the image of the post or not
   React.useEffect(() => {
     var docRef = db // quering
       .collection("posts")
@@ -127,6 +133,7 @@ export function Post(props) {
       if (doc.exists) {
         // if they have bought the image
         setHasPurchased(true);
+        // Ensuring the author of the image can see the unwatermarked photo
       } else if (profile === userId) {
         db.collection("posts")
           .doc(postId)
@@ -140,6 +147,7 @@ export function Post(props) {
     });
   }, [purchased, hasPurchased, postId, userId, profile]);
 
+  // Determining and rendering the watermarked and unwatermarked images
   React.useEffect(() => {
     var docRef = db
       .collection("posts")
@@ -170,34 +178,30 @@ export function Post(props) {
     });
   }, [purchased, postId, userId, imageURLProp, imageURLWatermarked]);
 
+  // Rendering the post
   return (
     <Card
       className={classes.root}
       variant="outlined"
       style={{ borderColor: "#cce6ff", borderWidth: 5, borderRadius: 20 }}
     >
+      {/* Rendering the header and image */}
       <CardHeader
         title={profile}
         subheader={postDescription}
         postId={postId}
-        timeStamp={calculateDate(timeStamp.toDate())}
+        timeStamp={timeStamp !== null ? calculateDate(timeStamp.toDate()) : ""}
       />
       <CardMedia
         className={classes.media}
-        // need to determine if the user has bought the image, and display the original or watermarked as needed
         image={imageURL}
         title={imageTitle}
       />
-
+      {/* Rendering all the elements of the posts */}
       <CardActions disableSpacing>
         <div className="div1">
           <div className="div2">
-            <Likes
-              tags={tags}
-              id={postId}
-              liked={liked}
-              numberOfLikes={numberOfLikes}
-            />
+            <Likes tags={tags} id={postId} numberOfLikes={numberOfLikes} />
             <Typography
               paragraph
               style={{
@@ -232,6 +236,7 @@ export function Post(props) {
           </div>
         </div>
       </CardActions>
+      {/* Rendering all of the tags in the posts and the comments */}
       <TagChips tags={tags} />
       <Comments id={postId} profile={profile} data="fromPost" />
     </Card>

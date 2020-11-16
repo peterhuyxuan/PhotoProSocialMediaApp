@@ -4,10 +4,12 @@ import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// Function for the popular user carousel
 export function PopularUsers() {
   const [popularUsers, setPopularUsers] = React.useState([]);
   const [imageURLs, setImageURLs] = React.useState(new Map());
 
+  // Getting the top three users with the most likes
   React.useEffect(() => {
     let unsubscribePopularUsers = db
       .collection("users")
@@ -23,6 +25,7 @@ export function PopularUsers() {
     return () => unsubscribePopularUsers();
   }, []);
 
+  // Getting the most like picture of the most popular user
   React.useEffect(() => {
     popularUsers.map((users) => {
       db.collection("posts")
@@ -43,10 +46,12 @@ export function PopularUsers() {
 
   const [index, setIndex] = React.useState(0);
 
+  // Setting the index of the carousel selected
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
 
+  // Rendering the carousel that displays the most popular users
   return (
     <>
       <Carousel
